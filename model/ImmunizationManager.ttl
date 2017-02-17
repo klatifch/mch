@@ -1,0 +1,395 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+
+############################################
+###Immunization
+fhir:Immunization  rdf:type owl:Class ;
+ rdfs:subClassOf  fhir:Resource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.date ;
+							owl:qualifiedCardinality"1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:dateTime
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.refusedIndicator ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.reported ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.vaccineType ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.subject;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						].
+
+###identifier
+fhir:Immunization.identifier  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Identifier.	
+	
+###date
+fhir:Immunization.date  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:dateTime.
+	
+###vaccineType
+fhir:Immunization.vaccineType  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Immunization ;
+	rdfs:range fhir:CodeableConcept .
+	
+###subject
+fhir:Immunization.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Immunization ;
+	rdfs:range fhir:Patient .
+	
+###refusedIndicator
+fhir:Immunization.refusedIndicator  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:boolean.	
+	
+###reported
+fhir:Immunization.reported  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:boolean.	
+
+###performer
+fhir:Immunization.performer rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Practitioner.
+	
+###requester
+fhir:Immunization.requester rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Practitioner.
+	
+###manufacturer
+fhir:Immunization.manufacturer rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Organization.
+	
+###location
+fhir:Immunization.location rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Location.
+
+###lotNumber
+fhir:Immunization.lotNumber  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:string.	
+	
+###expirationDate
+fhir:Immunization.expirationDate  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:date.	
+
+	
+###site
+fhir:Immunization.site rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:CodeableConcept.
+	
+###route
+fhir:Immunization.route rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:CodeableConcept.
+	
+###doseQuantity
+fhir:Immunization.doseQuantity rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Quantity .
+	
+###vaccinationProtocol
+fhir:Immunization.vaccinationProtocol rdf:type owl:ObjectProperty;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:VaccinationProtocol.
+	
+###explanation
+fhir:Immunization.explanation rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Immunization ;
+    rdfs:range fhir:Immunization.Explanation.
+	
+	
+	
+############### Immunization.Explanation	
+
+ fhir:Immunization.Explanation  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:DependentResource  .
+	
+###reason
+fhir:Immunization.Explanation.reason rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:CodeableConcept.
+	
+###vaccinationProtocol
+fhir:Immunization.Explanation.vaccinationProtocol rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:CodeableConcept.
+	
+###################Immunization.VaccinationProtocol
+
+fhir:Immunization.VaccinationProtocol rdf:type owl:Class ;
+ rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 	
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:VaccinationProtocol.doseSequence ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:integer
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.VaccinationProtocol.doseTarget;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Immunization.VaccinationProtocol.doseStatus ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] .
+
+###doseSequence
+fhir:Immunization.VaccinationProtocol.doseSequence  rdf:type  owl:FunctionalProperty,
+	owl:DatatypeProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:integer.
+
+###description
+fhir:Immunization.VaccinationProtocol.description  rdf:type  owl:FunctionalProperty,
+	owl:DatatypeProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:string.
+	
+###authority
+fhir:Immunization.VaccinationProtocol.authority  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:Organization.	
+	
+
+###series
+fhir:Immunization.VaccinationProtocol.series  rdf:type  owl:FunctionalProperty,
+	owl:DatatypeProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:string.	
+
+###seriesDoses
+fhir:Immunization.VaccinationProtocol.seriesDoses  rdf:type  owl:FunctionalProperty,
+	owl:DatatypeProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:integer.	
+
+###doseTarget
+fhir:Immunization.VaccinationProtocol.doseTarget  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Immunization.VaccinationProtocol ;
+	rdfs:range fhir:CodeableConcept.
+
+###doseStatus
+fhir:Immunization.VaccinationProtocol.doseStatus  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Immunization.VaccinationProtocol ;
+	rdfs:range fhir:CodeableConcept .
+
+
+	
+###doseStatusReason
+fhir:Immunization.VaccinationProtocol.doseStatusReason  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Immunization.VaccinationProtocol ;
+    rdfs:range fhir:CodeableConcept.	
+	
+	
+###############################################################################
+#####ImmunizationRecommendation
+
+fhir:ImmunizationRecommendation  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.recommendation ;
+							owl:onClass fhir:ImmunizationRecommendation.Recommendation ;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						] .
+
+###identifier
+fhir:ImmunizationRecommendation.identifier  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:ImmunizationRecommendation ;
+    rdfs:range fhir:Identifier.
+	
+###subject
+fhir:ImmunizationRecommendation.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:ImmunizationRecommendation ;
+	rdfs:range fhir:Patient .
+	
+###recommendation
+fhir:ImmunizationRecommendation.recommendation  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:ImmunizationRecommendation ;
+	rdfs:subPropertyOf fhir:composition ;
+	rdfs:range fhir:ImmunizationRecommendation.Recommendation .
+	
+####################################	
+###Recommendation
+
+
+fhir:ImmunizationRecommendation.Recommendation  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:DependentResource; 
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.Recommendation.date ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:dateTime
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.Recommendation.vaccineType ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] , 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.Recommendation.forecastStatus ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						].
+
+###protocol
+fhir:ImmunizationRecommendation.Recommendation.protocol  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ImmunizationRecommendation.Recommendation ;
+    rdfs:range fhir:ImmunizationRecommendation.Recommendation.Protocol.
+	
+###DateCriterion
+fhir:ImmunizationRecommendation..Recommendation.dateCriterion  rdf:type owl:ObjectProperty;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ImmunizationRecommendation.Recommendation ;
+    rdfs:range fhir:ImmunizationRecommendation.Recommendation.DateCriterion.
+	
+###date
+fhir:ImmunizationRecommendation.Recommendation.date rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation ;
+    rdfs:range fhir:dateTime.
+
+###vaccineType
+fhir:ImmunizationRecommendation.Recommendation.vaccineType  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:ImmunizationRecommendation.Recommendation ;
+	rdfs:range fhir:ImmunizationRecommendation.Recommendation.vaccineType .
+
+	
+###doseNumber
+fhir:ImmunizationRecommendation.Recommendation.doseNumber  rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation ;
+    rdfs:range fhir:integer.
+
+###forecastStatus
+fhir:ImmunizationRecommendation.Recommendation.forecastStatus  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:ImmunizationRecommendation.Recommendation ;
+	rdfs:range fhir:ImmunizationRecommendation.Recommendation.forecastStatus .
+
+	
+###supportingImmunization
+	fhir:ImmunizationRecommendation.Recommendation.DateCriterion  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:ImmunizationRecommendation ;
+    rdfs:range fhir:Immunization.
+	
+########################Protocol
+
+fhir:ImmunizationRecommendation.Recommendation.Protocol  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:DependentResource.
+	
+####doseSequence
+fhir:ImmunizationRecommendation.Recommendation.Protocol.doseSequence  rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation.Protocol ;
+    rdfs:range fhir:integer.
+	
+###description
+fhir:ImmunizationRecommendation.Recommendation.Protocol.description  rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation.Protocol ;
+    rdfs:range fhir:string.	
+	
+###authority
+fhir:ImmunizationRecommendation.Recommendation.Protocol.authority  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:ImmunizationRecommendation.Protocol ;
+    rdfs:range fhir:Organization.
+	
+###series
+fhir:ImmunizationRecommendation.Recommendation.Protocol.series  rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation.Protocol ;
+    rdfs:range fhir:string.	
+	
+###################################DateCriterion
+fhir:ImmunizationRecommendation.Recommendation.DateCriterion  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:DependentResource;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.Recommendation.DateCriterion.value;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:dateTime
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ImmunizationRecommendation.Recommendation.DateCriterion.code ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] .
+
+###code
+fhir:ImmunizationRecommendation.Recommendation.DateCriterion.code  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:ImmunizationRecommendation.DateCriterion ;
+	rdfs:range fhir:CodeableConcept .							 
+							  
+###value
+fhir:ImmunizationRecommendation.Recommendation.DateCriterion.value  rdf:type owl:DatatypeProperty, owl:FunctionalProperty;
+    rdfs:domain fhir:ImmunizationRecommendation.DateCriterion ;
+    rdfs:range fhir:dateTime.

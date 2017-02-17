@@ -1,0 +1,884 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+# Resource
+fhir:Resource  rdf:type owl:Class .
+# DependentResource 
+fhir:DependentResource rdf:type owl:Class .
+#Composition
+fhir:composition rdf:type owl:ObjectProperty .
+
+####################################Resource
+
+#contained
+fhir:Resource_contained rdf:type owl:ObjectProperty ;
+	rdfs:domain fhir:Resource ;
+	rdfs:range fhir:Resource.
+	
+#text
+fhir:text rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition;
+	rdfs:domain fhir:Resource ;
+	rdfs:range fhir:Resource_text.
+	
+###Text
+fhir:Resource_text  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource.
+	
+#status
+fhir:Resource_Text_status rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:Resource_Text ;
+	rdfs:range fhir:generated .
+	
+#status
+fhir:Resource_Text_div rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:Resource_Text ;
+	rdfs:range fhir: .
+
+fhir:Resource_id rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:domain fhir:Resource ;
+	rdfs:range fhir:string.
+
+##################################################
+###Location
+fhir:Location  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:Resource  .
+										 
+## fhir:Location_Position					
+fhir:Location_position  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Location_Position  ;
+    rdfs:domain  fhir:Location  .
+	
+## fhir:Location_identifier								   
+fhir:Location_identifier rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:Identifier.
+	
+## fhir:Location_name								   
+fhir:Location_name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:string.	
+
+## fhir:Location_description								   
+fhir:Location_description rdf:type owl:DatatypeProperty,
+	 owl:FunctionalProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:string.	
+							   
+## fhir:Location_type								   
+fhir:Location_type rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:CodeableConcept.
+
+## fhir:Location_telecom								   
+fhir:Location_telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:Contact.
+							   
+## fhir:Location_address								   
+fhir:Location_address rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:Address.
+
+## fhir:Location_physicalType								   
+fhir:Location_physicalType rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:CodeableConcept.
+
+## fhir:Location_managingOrganization								   
+fhir:Location_managingOrganization rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:Organization.
+
+## fhir:Location_status								   
+fhir:Location_status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:code.		
+	
+## fhir:Location_partOf								   
+fhir:Location_partOf rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:Location.							   
+
+
+## fhir:Location_mode								   
+fhir:Location_mode rdf:type  owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:code.	
+
+#########
+### Location_Position
+fhir:Location_Position  rdf:type owl:Class ;	
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Location_Position_longitude ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:decimal
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Location_Position_latitude ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:decimal
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+### fhir:Position_longitude
+fhir:Location_Position_longitude rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Location_Position ;
+	rdfs:range fhir:decimal.
+
+### fhir:Position_latitude
+fhir:Location_Position_latitude rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Location_Position ;
+	rdfs:range fhir:decimal.
+
+## fhir:Position_altitude								   
+fhir:Location_Position_altitude rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Location ;
+    rdfs:range fhir:code.
+
+##############################################################
+
+#### ValueSet 
+							   
+fhir:ValueSet rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource ;
+		owl:equivalentClass [ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:ValueSet_name ;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onDataRange fhir:string
+							],
+							[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:ValueSet_description ;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onDataRange fhir:string
+							],
+							[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:ValueSet_status ;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onDataRange fhir:code
+							] .
+	
+###	fhir:identifier
+
+fhir:ValueSet_identifier rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string .	
+	
+###	fhir:version
+
+fhir:ValueSet_version rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string .	
+							   
+###	fhir:name
+
+fhir:ValueSet_name rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string.
+						   
+###	fhir:publisher
+
+fhir:ValueSet_publisher rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string .
+
+## fhir:telecom						
+fhir:ValueSet_telecom  rdf:type owl:ObjectProperty ;
+	rdfs:range fhir:Contact  ;
+	rdfs:domain  fhir:ValueSet  .	
+
+###	fhir:description
+fhir:ValueSet_description rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string.
+
+		
+###	fhir:copyright
+fhir:ValueSet_copyright rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:string .	
+	
+###	fhir:status
+fhir:ValueSet_status rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:code.
+	
+													
+###	fhir:experimental
+fhir:ValueSet_experimental rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:boolean .														
+	
+	
+	
+###	fhir:extensible
+fhir:ValueSet_extensible rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:boolean .	
+
+###	fhir:date
+fhir:ValueSet_date rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet ;
+	rdfs:range fhir:dateTime .							   
+	
+## fhir:ValueSet_define						
+fhir:ValueSet_define  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+	rdfs:subPropertyOf fhir:composition ;
+	rdfs:range fhir:ValueSet_Define  ;
+	rdfs:domain  fhir:ValueSet  .	
+							   
+## fhir:ValueSet_expansion						
+fhir:ValueSet_expansion  rdf:type  owl:FunctionalProperty ,
+	owl:ObjectProperty;
+	rdfs:subPropertyOf fhir:composition ;
+	rdfs:range fhir:ValueSet_Expansion  ;
+	rdfs:domain  fhir:ValueSet  .		
+
+## fhir:ValueSet_compose						
+fhir:ValueSet_compose  rdf:type  owl:FunctionalProperty ,
+	owl:ObjectProperty;
+	rdfs:subPropertyOf fhir:composition ;
+	rdfs:range fhir:ValueSet_Compose  ;
+	rdfs:domain  fhir:ValueSet  .							   
+							   
+							   
+							   
+##########	
+	
+###  fhir:ValueSet_Define
+
+ fhir:ValueSet_Define  rdf:type owl:Class ;
+ 	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_Define_system  ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:uri
+						] ;
+	rdfs:subClassOf  fhir:DependentResource  .
+
+
+## fhir:ValueSet_concept						
+fhir:ValueSet_concept  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+	rdfs:range fhir:ValueSet_Concept  ;
+	rdfs:domain  fhir:ValueSet_Define  .	
+										 
+### fhir:system
+										 
+fhir:ValueSet_Define_system rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet_Define ;
+	rdfs:range fhir:uri.
+
+		
+### fhir:version
+
+fhir:ValueSet_Define_version rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet_Define ;
+	rdfs:range fhir:string.
+
+### fhir:caseSensitive
+
+fhir:ValueSet_Define_caseSensitive rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet_Define ;
+	rdfs:range fhir:boolean.
+							   
+
+
+							   
+
+##########	
+	
+###  fhir:ValueSet_Concept
+
+ fhir:ValueSet_ConceptSet  rdf:type owl:Class ;
+ 	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_Concept_code ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:code
+						] ;
+	rdfs:subClassOf  fhir:DependentResource  .
+										 
+### fhir:code										 
+fhir:ValueSet_Concept_code rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Concept ;
+	rdfs:range fhir:code.
+											 
+### fhir:abstract
+
+fhir:ValueSet_Concept_abstract rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;
+rdfs:subPropertyOf fhir:composition ;	
+    rdfs:domain fhir:ValueSet_Concept ;
+    rdfs:range fhir:boolean.		
+	
+### fhir:display
+
+fhir:ValueSet_Concept_display rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+     rdfs:domain fhir:ValueSet_Concept ;
+     rdfs:range fhir:string.										 
+
+### fhir:definition
+
+fhir:ValueSet_Concept_definition rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Concept ;
+    rdfs:range fhir:string.
+
+######################
+
+###  fhir:ValueSet_Expansion
+
+fhir:ValueSet_Expansion  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ValueSet_Expansion_timestamp;
+							owl:someValuesFrom fhir:instant
+						] ;
+	rdfs:subClassOf  fhir:DependentResource  .
+
+
+
+### fhir:identifier
+fhir:ValueSet_Expansion_identifier  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+	rdfs:range fhir:Identifier  ;
+	rdfs:domain  fhir:ValueSet_Expansion .	
+
+### fhir:timestamp
+fhir:ValueSet_Expansion_timestamp rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:ValueSet_Expansion ;
+	rdfs:range fhir:instant.
+
+
+
+## fhir:ValueSet_contains						
+fhir:ValueSet_contains  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:ValueSet_Contains  ;
+    rdfs:domain  fhir:ValueSet_Expansion  .	
+							   
+##########
+### ValueSet_contains
+fhir:ValueSet_Contains  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+
+
+## fhir:ValueSet_contains						
+fhir:ValueSet_contains  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:ValueSet_Contains  ;
+    rdfs:domain  fhir:ValueSet_contains  .
+							   
+### fhir:system
+
+fhir:ValueSet_Contains_system rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Contains ;
+    rdfs:range fhir:uri.
+
+### fhir:code
+
+fhir:ValueSet_Contains_code rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Contains ;
+    rdfs:range fhir:code.
+
+### fhir:display
+
+fhir:ValueSet_Contains_display rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Contains ;
+    rdfs:range fhir:string.							   
+
+################
+#####ValueSet_Compose
+
+fhir:ValueSet_Compose  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+
+
+## fhir:ValueSet_include						
+fhir:ValueSet_include  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:ValueSet_ConceptSet  ;
+    rdfs:domain  fhir:ValueSet_Compose  .
+
+## fhir:ValueSet_exclude						
+fhir:ValueSet_exclude  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:ValueSet_ConceptSet  ;
+    rdfs:domain  fhir:ValueSet_Compose  .							   
+
+## fhir:Compose_import								   
+fhir:ValueSet_Compose_import rdf:type owl:DatatypeProperty ;
+    rdfs:domain fhir:ValueSet_Compose ;
+    rdfs:range fhir:uri.
+
+################
+#####ValueSet_ConceptSet
+
+fhir:ValueSet_ConceptSet  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_ConceptSet_system ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:uri
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+
+
+## fhir:ValueSet_filter					
+fhir:ValueSet_filter  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:ValueSet_Filter  ;
+    rdfs:domain  fhir:ValueSet_ConceptSet  .
+
+### fhir:system
+fhir:ValueSet_ConceptSet_system rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_ConceptSet ;
+	rdfs:range fhir:uri.
+ 
+###fhir:version
+fhir:ValueSet_ConceptSet_version rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_ConceptSet ;
+    rdfs:range fhir:string.
+
+## fhir:code								   
+fhir:ValueSet_ConceptSet_code rdf:type owl:DatatypeProperty ;
+    rdfs:domain fhir:ValueSet_ConceptSet ;
+    rdfs:range fhir:code.
+
+
+##############
+###ValueSet_Filter
+fhir:ValueSet_Filter  rdf:type owl:Class ;
+	owl:equivalentClass	[ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_Filter_property ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_Filter_op ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+						    owl:onProperty fhir:ValueSet_Filter_value ;
+						    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						    owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+										 
+### fhir:property
+fhir:ValueSet_Filter_property rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Filter ;
+	rdfs:range fhir:code.
+
+		
+### fhir:op
+fhir:ValueSet_Filter_op rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Filter ;
+	rdfs:range fhir:code.
+
+		
+### fhir:value
+fhir:ValueSet_Filter_value rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:ValueSet_Filter ;
+	rdfs:range fhir:code.
+
+###########################################################
+#####Organization
+fhir:Organization  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:Resource  .
+										 
+## fhir:Organization_Contact					
+fhir:Organization_contact  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Organization_Contact  ;
+    rdfs:domain  fhir:Organization  .
+
+## fhir:Organization_identifier								   
+fhir:Organization_identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Organization ;
+    rdfs:range fhir:Identifier.							   
+							   
+###fhir:Organization_name
+fhir:Organization_name rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Organization ;
+    rdfs:range fhir:string.								   
+							   
+## fhir:Organization_type								   
+fhir:Organization_type rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Organization ;
+    rdfs:range fhir:CodeableConcept.
+
+							   
+## fhir:Organization_telecom								   
+fhir:Organization_telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Organization ;
+     rdfs:range fhir:Contact.
+							   
+## fhir:Organization_address								   
+fhir:Organization_address rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Organization ;
+     rdfs:range fhir:Address.
+	 
+## fhir:Organization_partOf								   
+fhir:Organization_partOf rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Organization ;
+    rdfs:range fhir:Organization.
+
+## fhir:Organization_location								   
+fhir:Organization_identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Organization ;
+     rdfs:range fhir:Location.
+
+###fhir:Organization_active
+fhir:Organization_active rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Organization ;
+    rdfs:range fhir:boolean.							   
+							   
+
+##############
+###Organization_Contact
+
+fhir:Organization_Contact  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+## fhir:Contact_purpose								   
+fhir:Organization_Contact_purpose rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Organization_Contact ;
+    rdfs:range fhir:CodeableConcept.
+
+## fhir:Contact_name								   
+fhir:Organization_Contact_name rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Organization_Contact ;
+    rdfs:range fhir:HumanName.
+
+## fhir:Contact_telecom								   
+fhir:Organization_Contact_telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Organization_Contact ;
+    rdfs:range fhir:Contact.
+							   
+## fhir:Contact_address								   
+fhir:Organization_Contact_address rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Organization_Contact ;
+    rdfs:range fhir:Address.
+
+## fhir:Contact_gender								   
+fhir:Organization_Contact_gender rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Organization_Contact ;
+    rdfs:range fhir:CodeableConcept.							   
+	
+#####################ConceptMap
+	fhir:ConceptMap rdf:type owl:Class ;
+			owl:equivalentClass [ 
+									rdf:type owl:Restriction ;
+									owl:onProperty fhir:ConceptMap_name;
+									owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+									owl:onDataRange fhir:string
+								],
+								[ 
+									rdf:type owl:Restriction ;
+									owl:onProperty fhir:ConceptMap_status ;
+									owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+									owl:onDataRange fhir:code
+								],
+								[ 
+									rdf:type owl:Restriction ;
+									owl:onProperty fhir:ConceptMap_source ;
+									owl:onClass fhir:ValueSet ;
+									owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+								], 
+								[ 
+									rdf:type owl:Restriction ;
+									owl:onProperty fhir:ConceptMap_target ;
+									owl:onClass fhir:ValueSet ;
+									owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+								];					  
+	rdfs:subClassOf  fhir:Resource.
+
+	
+### fhir:ConceptMap_concept							   
+fhir:ConceptMap_concept rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ConceptMap ;
+    rdfs:range fhir:ConceptMap_Concept.
+	
+###ConceptMap_identifier
+fhir:ConceptMap_identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.
+	
+###ConceptMap_version
+fhir:ConceptMap_version rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.
+	
+###ConceptMap_name
+fhir:ConceptMap_name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.
+	
+###ConceptMap_publisher
+fhir:ConceptMap_publisher rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.
+	
+### fhir:ConceptMap_telecom						   
+fhir:ConceptMap_telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:ConceptMap ;
+    rdfs:range fhir:Contact.
+
+###ConceptMap_description
+fhir:ConceptMap_description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.	
+	
+###ConceptMap_copyright
+fhir:ConceptMap_copyright rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:string.	
+	
+###ConceptMap_status
+fhir:ConceptMap_status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:code.	
+	
+###ConceptMap_experimental
+fhir:ConceptMap_experimental rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:boolean.	
+	
+###ConceptMap_date
+fhir:ConceptMap_date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap;
+    rdfs:range fhir:dateTime.
+
+###ConceptMap_source
+fhir:ConceptMap_source rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance_Document ;
+	rdfs:range fhir:ValueSet .
+	
+###ConceptMap_target
+fhir:ConceptMap_target rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance_Document ;
+	rdfs:range fhir:ValueSet .
+	
+###################ConceptMap_Concept
+fhir:ConceptMap_Concept  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ConceptMap_Concept_system;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+	
+### fhir:ConceptMap_Concept_map							   
+fhir:ConceptMap_Concept_map rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ConceptMap_Concept ;
+    rdfs:range fhir:ConceptMap_Concept_Map.
+	
+### fhir:ConceptMap_Concept_dependsOn							   
+fhir:ConceptMap_Concept_dependsOn rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ConceptMap_Concept ;
+    rdfs:range fhir:ConceptMap_OtherConcept.
+	
+###ConceptMap_Concept_system
+fhir:ConceptMap_Concept_system rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept;
+    rdfs:range fhir:uri.
+	
+###ConceptMap_Concept_code
+fhir:ConceptMap_Concept_code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept;
+    rdfs:range fhir:code.
+
+###################ConceptMap_Concept_Map
+fhir:ConceptMap_Concept_Map  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ConceptMap_Concept_Map_equivalence;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+	
+### fhir:ConceptMap_Concept_Map_product						   
+fhir:ConceptMap_Concept_Map_product rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ConceptMap_Concept_Map ;
+    rdfs:range fhir:ConceptMap_Concept_OtherConcept.
+
+###ConceptMap_Concept_Map_system
+fhir:ConceptMap_Concept_Map_system rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept_Map;
+    rdfs:range fhir:uri.
+
+###ConceptMap_Concept_Map_code
+fhir:ConceptMap_Concept_Map_code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept_Map;
+    rdfs:range fhir:code.	
+	
+###ConceptMap_Concept_Map_equivalence
+fhir:ConceptMap_Concept_Map_equivalence rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept_Map;
+    rdfs:range fhir:code.
+	
+###ConceptMap_Concept_Map_comments
+fhir:ConceptMap_Concept_Map_comments rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_Concept_Map;
+    rdfs:range fhir:string.
+	
+########################ConceptMap_OtherConcept
+fhir:ConceptMap_OtherConcept  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ConceptMap_OtherConcept_concept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ConceptMap_OtherConcept_system;;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:ConceptMap_OtherConcept_code;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;							  
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###ConceptMap_OtherConcept_concept
+fhir:ConceptMap_OtherConcept_concept rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_OtherConcept;
+    rdfs:range fhir:uri.
+	
+###ConceptMap_OtherConcept_system
+fhir:ConceptMap_OtherConcept_system rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_OtherConcept;
+    rdfs:range fhir:uri.
+	
+###ConceptMap_OtherConcept_code
+fhir:ConceptMap_OtherConcept_code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ConceptMap_OtherConcept;
+    rdfs:range fhir:code.
+	
+
+
+###Binary Resource
+
+fhir:BinaryResource rdf:type owl:Class ;
+rdfs:subClassOf  fhir:Contained.
+
+fhir:BinaryResource_resourceType rdf:type owl:DatatypeProperty;
+	rdfs:domain fhir:BinaryResource  ;
+	rdfs:range fhir:binary .
+	
+fhir:BinaryResource_contentType rdf:type owl:DatatypeProperty;
+	rdfs:domain fhir:BinaryResource  ;
+	rdfs:range fhir:string .
+	
+fhir:BinaryResource_content rdf:type owl:DatatypeProperty;
+	rdfs:domain fhir:BinaryResource  ;
+	rdfs:range fhir:base64Binary .
+	
+####Signatures
+
+fhir:Signatures rdf:type owl:Class ;
+rdfs:subClassOf  fhir:Contained .	
+
+fhir:Signatures_resourceType rdf:type owl:ObjectProperty;
+	rdfs:domain fhir:Signatures ;
+	rdfs:range fhir:Resource .
+	
+fhir:Signatures rdf:type owl:DatatypeProperty;
+	rdfs:domain fhir:BinaryResource  ;
+	rdfs:range fhir:string .

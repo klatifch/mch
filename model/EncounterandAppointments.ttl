@@ -1,0 +1,331 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+#########################Encounter
+fhir:Encounter rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Encounter.status;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Encounter.class;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+	rdfs:subClassOf  fhir:Resource  .
+
+### fhir:Encounter.location						   
+fhir:Encounter.location rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range fhir:Encounter.Location.
+	
+### fhir:Encounter.participant 						   
+fhir:Encounter.participant rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range fhir:Encounter.Participant.	
+
+### fhir:Encounter.hospitalization						   
+fhir:Encounter.hospitalization rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range fhir:Encounter.Hospitalization.
+
+	
+### fhir:Encounter.identifier					   
+fhir:Encounter.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range fhir:Identifier.	
+	
+###fhir:Encounter.status
+fhir:Encounter.status rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Encounter ;
+	rdfs:range fhir:code.	
+	
+###fhir:Encounter.class
+fhir:Encounter.class rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Encounter ;
+	rdfs:range fhir:code.
+	
+### fhir:Encounter.type				   
+fhir:Encounter.type rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range fhir:CodeableConcept.	
+	
+## fhir:Encounter.subject				
+fhir:Encounter.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Patient  .
+
+## fhir:Encounter.period				
+fhir:Encounter.period  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Period  .
+
+## fhir:Encounter.length				
+fhir:Encounter.length  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Duration  .
+
+## fhir:Encounter.reason				
+fhir:Encounter.reason  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:CodeableConcept .
+
+## fhir:Encounter.indication				
+fhir:Encounter.indication  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Resource  .
+
+## fhir:Encounter.priority				
+fhir:Encounter.priority  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:CodeableConcept  .
+
+## fhir:Encounter.serviceProvider				
+fhir:Encounter.serviceProvider  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Organization  .
+
+## fhir:Encounter.partOf				
+fhir:Encounter.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter ;
+    rdfs:range  fhir:Encounter  .	
+	
+############
+fhir:Encounter.Hospitalization rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .		
+	
+## fhir:Encounter.Hospitalization.accomodation					
+fhir:Encounter.accomodation  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Encounter.Hospitalization  ;
+    rdfs:domain  fhir:Accomodation  .
+	
+## fhir:Encounter.Hospitalization.preAdmissionIdentifier				
+fhir:Encounter.Hospitalization.preAdmissionIdentifier  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:Identifier  .	
+	
+## fhir:Encounter.Hospitalization.origin				
+fhir:Encounter.Hospitalization.origin  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:Location  .	
+	
+## fhir:Encounter.Hospitalization.admitSource				
+fhir:Encounter.Hospitalization.admitSource  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:CodeableConcept  .	
+	
+## fhir:Encounter.Hospitalization.period				
+fhir:Encounter.Hospitalization.period  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:Period  .	
+	
+## fhir:Encounter.Hospitalization.diet				
+fhir:Encounter.Hospitalization.diet rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:CodeableConcept  .	
+	
+## fhir:Encounter.Hospitalization.specialCourtesy				
+fhir:Encounter.Hospitalization.specialCourtesy  rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:CodeableConcept  .	
+	
+## fhir:Encounter.Hospitalization.specialArrangement				
+fhir:Encounter.Hospitalization.specialArrangement  rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:CodeableConcept .	
+	
+## fhir:Encounter.Hospitalization.destination				
+fhir:Encounter.Hospitalization.destination  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:Location .	
+	
+## fhir:Encounter.Hospitalization.dischargeDisposition				
+fhir:Encounter.Hospitalization.dischargeDisposition  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:CodeableConcept  .	
+	
+## fhir:Encounter.Hospitalization.dischargeDiagnosis				
+fhir:Encounter.Hospitalization.dischargeDiagnosis rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization ;
+    rdfs:range  fhir:Resource  .	
+	
+###fhir:Encounter.Hospitalization.reAdmission
+fhir:Encounter.reAdmission rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Encounter ;
+	rdfs:range fhir:boolean.
+
+################Encounter.Participant
+fhir:Encounter.Participant rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+## fhir:Encounter.Participant.type				
+fhir:Encounter.Participant.type rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Participant ;
+    rdfs:range  fhir:CodeableConcept .
+
+## fhir:Encounter.Participant.individual 				
+fhir:Encounter.Participant.individual rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Participant ;
+    rdfs:range  fhir:Practitioner ,
+				fhir:RelatedPerson . 
+				
+##############Encounter.Location
+fhir:Encounter.Location rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Encounter.Location.location  ;
+							owl:onClass fhir:Location;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Encounter.Location.period ;
+							owl:onClass fhir:Period;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] .
+	
+#####Encounter.Location.location
+fhir:Encounter.Location.location  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Encounter.Location ;
+	rdfs:range fhir:Location .
+	
+#####Encounter.Location.period
+fhir:Encounter.Location.period rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Encounter.Location ;
+	rdfs:range fhir:Period .
+	
+##############Encounter.Hospitalization.Accomodation
+fhir:Encounter.Hospitalization.Accomodation rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+## fhir:Encounter.Hospitalization.Accomodation.bed				
+fhir:Encounter.Hospitalization.Accomodation.bed rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization.Accomodation ;
+    rdfs:range  fhir:Location .	
+		
+## fhir:Encounter.Hospitalization.Accomodation.period				
+fhir:Encounter.Hospitalization.Accomodation.period rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Encounter.Hospitalization.Accomodation ;
+    rdfs:range  fhir:Period .	
+
+##########################################Appointment
+fhir:Appointment  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:Resource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Appointment.whenCreated;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:dateTime
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Appointment.identifier ;
+							owl:onClass fhir:Identifier;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Appointment.timingPeriod ;
+							owl:onClass fhir:Identifier ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Appointment.timingSchedule ;
+							owl:onClass fhir:Schedule ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Appointment.subject  ;
+							owl:onClass fhir:Patient ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						].
+							 
+fhir:Appointment.details  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Appointment.Details ;
+    rdfs:domain  fhir:Appointment  .
+
+
+fhir:Appointment.identifier  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Appointment ;
+	rdfs:range fhir:Identifier .
+	
+fhir:Appointment.text rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Appointment ;
+    rdfs:range fhir:string.
+	
+	
+fhir:Appointment.whenCreated rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Appointment ;
+    rdfs:range fhir:dateTime.
+	
+fhir:Appointment.timingPeriod rdf:type owl:ObjectProperty ;
+            rdfs:domain fhir:Appointment ;
+            rdfs:range  fhir:Period .
+
+fhir:Appointment.timingSchedule rdf:type owl:ObjectProperty ;
+            rdfs:domain fhir:Appointment ;					   
+			rdfs:range fhir:Schedule  .
+					
+fhir:Appointment.subject rdf:type owl:ObjectProperty ;            
+            rdfs:domain fhir:Appointment ;           
+            rdfs:range fhir:Patient .
+					   
+fhir:Appointment.status  rdf:type owl:ObjectProperty,
+owl:FunctionalProperty;
+    rdfs:domain fhir:Appointment ;
+    rdfs:range fhir:CodeableConcept.
+	
+fhir:Appointment.performer  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Appointment ;
+    rdfs:range fhir:Practitioner.
+	
+fhir:Appointment.target  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Appointment ;
+    rdfs:range fhir:Device ,
+			   fhir:Schedule .
+	

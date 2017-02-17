@@ -1,0 +1,250 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+#######################################AllergyIntolerance
+	fhir:AllergyIntolerance rdf:type owl:Class ;
+		
+	     owl:equivalentClass [ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:AllergyIntolerance.status ;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onDataRange fhir:code
+                             ] ,
+							 [ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:AllergyIntolerance.sensitivityType ;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onDataRange fhir:code
+                             ] ,
+							[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:AllergyIntolerance.substance ;
+								owl:onClass fhir:Substance;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+							], 
+							[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:AllergyIntolerance.subject ;
+								owl:onClass fhir:Patient;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+							];
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:AllergyIntolerance.identifier			
+fhir:AllergyIntolerance.identifier  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+    rdfs:range fhir:Identifier.
+
+fhir:AllergyIntolerance.criticality rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AllergyIntolerance ;
+    rdfs:range fhir:code.
+	
+fhir:AllergyIntolerance.sensitivityType rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AllergyIntolerance ;
+    rdfs:range fhir:code.
+	
+fhir:AllergyIntolerance.recordedDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AllergyIntolerance ;
+    rdfs:range fhir:dateTime.
+	
+fhir:AllergyIntolerance.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AllergyIntolerance ;
+    rdfs:range fhir:code.
+	
+fhir:AllergyIntolerance.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+	rdfs:range fhir:Patient .
+
+### fhir:AllergyIntolerance.recorder			
+fhir:AllergyIntolerance.recorder  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+    rdfs:range fhir:Practitioner,
+			   fhir:Patient. 
+	
+fhir:AllergyIntolerance.substance  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+	rdfs:range fhir:Substance .
+
+### fhir:AllergyIntolerance.reaction			
+fhir:AllergyIntolerance.reaction  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+    rdfs:range fhir:AdverseReaction.	
+	
+### fhir:AllergyIntolerance.sensitivityTest			
+fhir:AllergyIntolerance.sensitivityTest  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:AllergyIntolerance;
+    rdfs:range fhir:Observation.
+	
+#####################################AdverseReaction
+	fhir:AdverseReaction rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:AdverseReaction.didNotOccurFlag ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:AdverseReaction.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:AdverseReaction.symptom							   
+fhir:AdverseReaction.symptom rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:AdverseReaction ;
+    rdfs:range fhir:AdverseReaction.Symptom.
+	
+### fhir:AdverseReaction.exposure							   
+fhir:AdverseReaction.exposure rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:AdverseReaction ;
+    rdfs:range fhir:AdverseReaction.Exposure.
+	
+### fhir:AdverseReaction.identifier					
+fhir:AdverseReaction.identifier  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Identifier.
+	
+###fhir:AdverseReaction.date
+fhir:AdverseReaction.date rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:AdverseReaction ;
+	rdfs:range fhir:dateTime.
+
+###fhir:AdverseReaction.didNotOccurFlag
+fhir:AdverseReaction.didNotOccurFlag rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:AdverseReaction ;
+	rdfs:range fhir:boolean.	
+	
+fhir:AdverseReaction.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:AdverseReaction ;
+	rdfs:range fhir:Patient .
+	
+### fhir:AdverseReaction.recorder				
+fhir:AdverseReaction.recorder  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:AdverseReaction;
+    rdfs:range fhir:Practitioner,
+			   fhir:Patient .
+			   
+##################################AdverseReaction.Symptom
+fhir:AdverseReaction.Symptom  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:AdverseReaction.Symptom.code ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+fhir:AdverseReaction.Symptom.code  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:AdverseReaction.Symptom ;
+	rdfs:range fhir:CodeableConcept .	
+	
+	
+fhir:AdverseReaction.Symptom.severity rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AdverseReaction.Symptom;
+    rdfs:range fhir:code.
+
+##################################AdverseReaction.Exposure
+fhir:AdverseReaction.Exposure  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+fhir:AdverseReaction.Exposure.date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AdverseReaction.Exposure ;
+    rdfs:range fhir:dateTime.	
+	
+fhir:AdverseReaction.Exposure.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AdverseReaction.Exposure ;
+    rdfs:range fhir:code.	
+	
+fhir:AdverseReaction.Exposure.causalityExpectation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:AdverseReaction.Exposure ;
+    rdfs:range fhir:code.	
+	
+### fhir:AdverseReaction.Exposure.substance				
+fhir:AdverseReaction.Exposure.substance  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:AdverseReaction.Exposure;
+    rdfs:range fhir:Substance.
+
+###############Alert
+fhir:Alert  rdf:type owl:Class ;
+	owl:equivalentClass 	[ 	
+								rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Alert.status;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange fhir:code
+                            ] ,
+							[ 
+								rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Alert.note;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange fhir:string
+							] ,
+							[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:Alert.subject ;
+								owl:onClass fhir:Patient;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+							];
+	rdfs:subClassOf  fhir:Resource  .
+	
+#### fhir:Alert.identifier				
+fhir:Alert.identifier  rdf:type owl:ObjectProperty ;
+    rdfs:range fhir:Identifier ;
+    rdfs:domain  fhir:Alert .
+
+#### fhir:Alert.category				
+fhir:Alert.category  rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:range fhir:CodeableConcept ;
+    rdfs:domain  fhir:Alert .
+	
+#####fhir:Alert.status
+	fhir:Alert.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Alert ;
+    rdfs:range fhir:code.
+
+	
+#######fhir:Alert.subject
+fhir:Alert.subject rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Alert ;
+	rdfs:range fhir:Patient .
+	
+#### fhir:Alert.author				
+fhir:Alert.category  rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Alert ;
+    rdfs:range fhir:Practitioner ,
+	           fhir:Patient ,
+			   fhir:Device.
+			   
+#####fhir:Alert.note
+	fhir:Alert.note rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Alert ;
+    rdfs:range fhir:string.			   

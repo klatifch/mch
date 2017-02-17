@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This document includes code from one of HL7 documents. So the original copyright and license
+  is included below as it is.
+-->
+
+<!-- 
+  Copyright (c) 2011-2013, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified">
+	
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xhtml" schemaLocation="xhtml1-strict.xsd"/>
+	
+	<!-- Primitive Types -->
+	
+	<xs:simpleType name="boolean">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="integer">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="decimal">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="base64Binary">
+		<xs:restriction base="xs:base64Binary"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="instant">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="string">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="uri">
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="date">
+		<xs:restriction>
+			<xs:simpleType>
+				<xs:union memberTypes="xs:gYear xs:gYearMonth xs:date"/>
+			</xs:simpleType>
+			<xs:pattern value="\d{4}(\-\d{2}(\-\d{2})?)?(Z|(\+|\-)\d{2}:\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dateTime">
+		<xs:annotation>
+			<xs:documentation>A date, date-time or partial date (e.g. just year or year + month).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction>
+			<xs:simpleType>
+				<xs:union memberTypes="xs:gYear xs:gYearMonth xs:date xs:dateTime"/>
+			</xs:simpleType>
+			<xs:pattern value="\d{4}(\-\d{2}(\-\d{2}(T\d{2}(:\d{2}(:\d{2}(\.\d+)?)?)?)?)?)?(Z|(\+|\-)\d{2}:\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Simple Restrictions -->
+	
+	<xs:simpleType name="code">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="oid">
+		<xs:restriction base="xs:anyURI">
+			<xs:pattern value="urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="uuid">
+		<xs:restriction base="xs:anyURI">
+			<xs:pattern value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="id">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-z0-9\-\.]{1,36}"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

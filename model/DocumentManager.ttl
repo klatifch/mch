@@ -1,0 +1,967 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+
+#################################################fhir:Composition
+fhir:Composition  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.date ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:dateTime
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.status ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.type ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.confidentiality ;
+							owl:onClass fhir:Coding;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.subject ;
+							owl:onClass fhir:Practitioner;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.subject ;
+							owl:onClass fhir:Group;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.subject ;
+							owl:onClass fhir:Device;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.subject ;
+							owl:onClass fhir:Location;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.author ;
+							owl:onClass fhir:Patient;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.author ;
+							owl:onClass fhir:Practitioner;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.author ;
+							owl:onClass fhir:Device;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.author ;
+							owl:onClass fhir:RelatedPerson;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						];					
+	rdfs:subClassOf  fhir:Resource .
+	
+### fhir:Composition.section							   
+fhir:Composition.section rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Composition.Section.
+
+### fhir:Composition.attester							   
+fhir:Composition.attester rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Composition.Attester.
+
+### fhir:Composition.event							   
+fhir:Composition.event rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Composition.Event.	
+	
+###fhir:Composition.identifier
+fhir:Composition.identifier rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Identifier.
+	
+###fhir:Composition.date
+fhir:Composition.date rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Composition ;
+	rdfs:range fhir:dateTime.
+	
+###fhir:Composition.type
+fhir:Composition.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Composition ;
+	rdfs:range fhir:CodeableConcept .
+	
+###fhir:Composition.class
+fhir:Composition.class rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition ;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Composition.title
+fhir:Composition.title rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Composition ;
+	rdfs:range fhir:string.
+	
+###fhir:Composition.status
+fhir:Composition.status rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Composition ;
+	rdfs:range fhir:code.
+	
+###fhir:Composition.confidentiality
+fhir:Composition.confidentiality  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Composition ;
+	rdfs:range fhir:Coding .
+
+###fhir:Composition.subject
+fhir:Composition.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Composition ;
+	rdfs:range fhir:Patient ,
+			   fhir:Practitioner ,
+			   fhir:Group ,
+			   fhir:Device ,
+			   fhir:Location .
+	
+###fhir:Composition.author
+fhir:Composition.author  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Composition ;
+	rdfs:range 	fhir:Practitioner ,
+				fhir:Device ,
+				fhir:Patient ,
+				fhir:RelatedPerson .
+				
+###fhir:Composition.custodian
+fhir:Composition.custodian rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Organization.
+
+###fhir:Composition.encounter
+fhir:Composition.class rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Encounter.
+	
+##############################	
+####Composition.section
+fhir:Composition.Section  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+
+#### fhir:Composition.section						   
+fhir:Composition.section rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Composition ;
+    rdfs:range fhir:Composition.Section.
+
+	
+###fhir:Composition.Section.title
+fhir:Composition.Section.title rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Composition ;
+	rdfs:range fhir:string.
+	
+
+	
+###fhir:Composition.Section.code
+fhir:Composition.Section.code rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Section ;
+    rdfs:range fhir:CodeableConcept.
+
+###fhir:Composition.Section.subject
+fhir:Composition.Section.subject rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Section ;
+    rdfs:range fhir:Patient,
+			   fhir:Group,
+			   fhir:Device.
+			   
+			   
+###fhir:Composition.Section.content
+fhir:Composition.Section.content rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Section ;
+    rdfs:range fhir:Resource.
+
+	
+##############################	
+####Composition.event
+fhir:Composition.Event  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+#### fhir:Composition.Event.code						   
+fhir:Composition.Event.code rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Composition.Event ;
+    rdfs:range fhir:CodeableConcept.
+			   
+###fhir:Composition.Event.period
+fhir:Composition.Event.period rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Event ;
+    rdfs:range fhir:Period.
+	
+###fhir:Composition.Event.detail
+fhir:Composition.Event.detail rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Event ;
+    rdfs:range fhir:Resource.
+	
+##############################	
+####Composition.attester
+fhir:Composition.Attester  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Composition.Attester.mode ;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+					   
+###fhir:Composition.Attester.mode
+fhir:Composition.Attester.mode rdf:type owl:DatatypeProperty ;         
+    rdfs:domain fhir:Composition.Attester.mode ;
+	rdfs:range fhir:code.
+
+###fhir:Composition.Attester.time
+fhir:Composition.Attester.time rdf:type owl:DatatypeProperty ,
+owl:FunctionalProperty;         
+    rdfs:domain fhir:Composition.Attester.time ;
+	rdfs:range fhir:code.	
+
+###fhir:Composition.Attester.party
+fhir:Composition.Attester.party rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty;
+	rdfs:domain fhir:Composition.Attester ;
+    rdfs:range fhir:Patient,
+			   fhir:Practitioner,
+			   fhir:Organization.
+			   
+########################################DocumentReference
+fhir:DocumentReference rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.indexed;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:instant
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.status;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],	
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.mimeType;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.subject ;
+							owl:onClass fhir:Practitioner;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.subject ;
+							owl:onClass fhir:Group;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.subject ;
+							owl:onClass fhir:Device;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.masterIdentifier ;
+							owl:onClass fhir:Identifier;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.type ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.author ;
+							owl:onClass fhir:Patient;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.author ;
+							owl:onClass fhir:Practitioner;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.author ;
+							owl:onClass fhir:Device;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.author ;
+							owl:onClass fhir:RelatedPerson;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						] ;							  
+rdfs:subClassOf  fhir:Resource  .	
+	
+	
+##### fhir:DocumentReference.relatesTo						   
+fhir:DocumentReference.relatesTo rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:DocumentReference.RelatesTo.
+	
+##### fhir:DocumentReference.service						   
+fhir:DocumentReference.service rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:DocumentReference.Service.	
+	
+##### fhir:DocumentReference.context						   
+fhir:DocumentReference.context rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:DocumentReference.Context.
+
+####fhir:DocumentReference.masterIdentifier
+fhir:DocumentReference.masterIdentifier  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentReference;
+	rdfs:range fhir:Identifier .
+	
+### fhir:DocumentReference.identifier					
+fhir:Location.Position  rdf:type owl:ObjectProperty ;
+    rdfs:range fhir:Identifier ;
+    rdfs:domain  fhir:DocumentReference  .	
+
+####fhir:DocumentReference.subject
+fhir:DocumentReference.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentReference;
+	rdfs:range 	fhir:Patient,
+				fhir:Practitioner ,
+				fhir:Group ,
+				fhir:Device .
+	
+####fhir:DocumentReference.type
+fhir:DocumentReference.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentReference;
+	rdfs:range fhir:CodeableConcept .
+	
+## fhir:DocumentReference.class					
+fhir:DocumentReference.class rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:range fhir:CodeableConcept ;
+    rdfs:domain  fhir:DocumentReference .
+	
+###fhir:DocumentReference.author
+fhir:DocumentReference.author rdf:type owl:ObjectProperty ;          
+            rdfs:domain fhir:DocumentReference ;         
+            rdfs:range 	fhir:Patient ,
+						fhir:Practitioner ,
+						fhir:RelatedPerson ,
+						fhir:Device.
+					   
+#### fhir:DocumentReference.custodian						   
+fhir:DocumentReference.custodian rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:Organization.
+	
+
+#### fhir:DocumentReference.authenticator						   
+fhir:DocumentReference.authenticator rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:Organization,
+			   fhir:Practitioner . 
+			   
+
+###fhir:created			   
+fhir:DocumentReference.created rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:dateTime.
+	
+###fhir:indexed		   
+fhir:DocumentReference.created rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:instant.
+	
+###fhir:status		   
+fhir:DocumentReference.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:code.
+	
+#### fhir:DocumentReference.docStatus						   
+fhir:DocumentReference.docStatus rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:CodeableConcept.
+		
+###fhir:description	   
+fhir:DocumentReference.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:string.
+	
+#### fhir:DocumentReference.confidentiality						   
+fhir:DocumentReference.confidentiality rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:primaryLanguage		   
+fhir:DocumentReference.primaryLanguage rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:code.	
+	
+###fhir:mimeType	   
+fhir:DocumentReference.mimeType rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:code.
+	
+###fhir:format	   
+fhir:DocumentReference.format rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:uri.
+	
+###fhir:size	   
+fhir:DocumentReference.size rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:integer.
+
+###fhir:hash	   
+fhir:DocumentReference.hash rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:string.
+	
+###fhir:location	   
+fhir:DocumentReference.location rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference ;
+    rdfs:range fhir:uri.
+		
+################################################DocumentReference.RelatesTo
+fhir:DocumentReference.RelatesTo  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.RelatesTo.code;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.RelatesTo.target ;
+							owl:onClass fhir:DocumentReference;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:code	   
+fhir:DocumentReference.RelatesTo.code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference.RelatesTo ;
+    rdfs:range fhir:code.
+	
+#######Target
+fhir:DocumentReference.RelatesTo.target  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentReference.RelatesTo;
+	rdfs:range fhir:DocumentReference .
+	
+
+################################################DocumentReference.service
+fhir:DocumentReference.Service  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass	[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.Service.type ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] .
+		
+### fhir:DocumentReference.Service.parameter						   
+fhir:DocumentReference.Service.parameter rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:DocumentReference.Service ;
+    rdfs:range fhir:DocumentReference.Service.Parameter.
+	
+	
+#######Type
+fhir:DocumentReference.Service.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentReference.Service;
+	rdfs:range fhir:CodeableConcept .
+	
+###fhir:address	   
+fhir:DocumentReference.Service.address rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference.Service ;
+    rdfs:range fhir:string.	
+
+	
+################################################DocumentReference.service.parameter
+fhir:DocumentReference.Service.Parameter  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentReference.Service.Parameter.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+
+###fhir:name	   
+fhir:DocumentReference.Service.Parameter.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference.Service.Parameter ;
+    rdfs:range fhir:string.	
+	
+###fhir:value	   
+fhir:DocumentReference.Service.Parameter.value rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentReference.Service.Parameter ;
+    rdfs:range fhir:string.	
+	
+################################################DocumentReference.context
+fhir:DocumentReference.Context  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+#### fhir:DocumentReference.Context.event					   
+fhir:DocumentReference.Context.event rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference.Context ;
+    rdfs:range fhir:CodeableConcept.
+	
+#### fhir:DocumentReference.Context.period					   
+fhir:DocumentReference.Context.period rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference.Context ;
+    rdfs:range fhir:Period.
+	
+#### fhir:DocumentReference.Context.facilityType					   
+fhir:DocumentReference.Context.facilityType rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:DocumentReference.Context ;
+    rdfs:range fhir:CodeableConcept.
+	
+##########################DocumentManifest
+fhir:DocumentManifest rdf:type owl:Class ;
+	owl:equivalentClass [ 	
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.status;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.masterIdentifier ;
+							owl:onClass fhir:Identifier;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.content ;
+							owl:onClass fhir:Binary;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.content ;
+							owl:onClass fhir:Media;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.content ;
+							owl:onClass fhir:DocumentReference;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.subjectt ;
+							owl:onClass fhir:Patient;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.subjectt ;
+							owl:onClass fhir:Practitioner;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.subjectt ;
+							owl:onClass fhir:Group;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:DocumentManifest.subjectt ;
+							owl:onClass fhir:Device;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						];						  
+rdfs:subClassOf  fhir:Resource  .
+	
+#########DocumentManifest.masterIdentifier
+fhir:DocumentManifest.masterIdentifier  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+	rdfs:range fhir:Identifier .
+	
+### fhir:DocumentManifest.identifier					
+fhir:DocumentManifest.identifier  rdf:type owl:ObjectProperty ;
+    rdfs:range fhir:Identifier ;
+    rdfs:domain  fhir:DocumentManifest .
+	
+###fhir:DocumentManifest.subject
+fhir:DocumentManifest.subject rdf:type owl:ObjectProperty ;          
+            rdfs:domain fhir:DocumentManifest ;         
+            rdfs:range 	fhir:Patient,
+						fhir:Practitioner,
+						fhir:Group,
+						fhir:Device .
+
+### fhir:DocumentManifest.recipient				
+fhir:DocumentManifest.recipient  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+    rdfs:range fhir:Patient,
+			   fhir:Practitioner,
+			   fhir:Organization . 
+			   
+
+### fhir:DocumentManifest.type			
+fhir:DocumentManifest.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+    rdfs:range fhir:CodeableConcept.
+
+### fhir:DocumentManifest.author			
+fhir:DocumentManifest.author  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+    rdfs:range fhir:Patient,
+			   fhir:Practitioner,
+			   fhir:RelatedPerson ,
+			   fhir:Device . 
+			   
+####fhir:DocumentManifest.created
+fhir:DocumentManifest.created rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentManifest ;
+    rdfs:range fhir:dateTime.
+	
+####fhir:DocumentManifest.source
+fhir:DocumentManifest.source rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentManifest ;
+    rdfs:range fhir:uri.
+	
+####fhir:DocumentManifest.status
+fhir:DocumentManifest.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentManifest ;
+    rdfs:range fhir:code.
+
+### fhir:DocumentManifest.supercedes			
+fhir:DocumentManifest.supercedes  rdf:type owl:FunctionalProperty , 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+    rdfs:range fhir:DocumentManifest.
+	
+####fhir:DocumentManifest.description
+fhir:DocumentManifest.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:DocumentManifest ;
+    rdfs:range fhir:string.
+	
+### fhir:DocumentManifest.confidentiality			
+fhir:DocumentManifest.confidentiality  rdf:type owl:FunctionalProperty , 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:DocumentManifest;
+    rdfs:range fhir:CodeableConcept.
+	
+####fhir:DocumentManifest.content
+fhir:DocumentManifest.content rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:DocumentManifest ;
+    rdfs:range 	fhir:Binary,
+				fhir:DocumentReference ,
+				fhir:Media .	 
+
+					  
+##############################fhir:MessageHeader
+
+fhir:MessageHeader rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.identifier ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.timestamp ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.event ;
+							owl:onClass fhir:Coding;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.source ;
+							owl:onClass fhir:MessageHeader.MessageSource;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;					
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:MessageHeader.MessageDestination							   
+fhir:MessageHeader.destination rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MessageHeader ;
+    rdfs:range fhir:MessageHeader.MessageDestination.
+	
+### fhir:MessageHeader.Response							   
+fhir:MessageHeader.response rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MessageHeader ;
+    rdfs:range fhir:MessageHeader.Response.
+	
+### fhir:MessageHeader.Source						   
+fhir:MessageHeader.source rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MessageHeader ;
+	rdfs:range fhir:MessageHeader.MessageSource .
+
+###fhir:MessageHeader.identifier
+fhir:MessageHeader.identifier rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader ;
+	rdfs:range fhir:id.	
+	
+###fhir:MessageHeader.timestamp
+fhir:MessageHeader.timestamp rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader ;
+	rdfs:range fhir:instant.	
+
+### fhir:MessageHeader.event						   
+fhir:MessageHeader.event rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MessageHeader ;
+	rdfs:range fhir:Coding .	
+	
+### fhir:MessageHeader.enterer					
+fhir:MessageHeader.enterer  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:range fhir:Practitioner;
+    rdfs:domain  fhir:MessageHeader .
+	
+### fhir:MessageHeader.author					
+fhir:MessageHeader.author rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:range fhir:Practitioner;
+    rdfs:domain  fhir:MessageHeader .
+	
+### fhir:MessageHeader.receiver				
+fhir:MessageHeader.receiver  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader ;
+	    rdfs:range fhir:Practitioner,
+				   fhir:Organization.
+
+
+### fhir:MessageHeader.responsible				
+fhir:MessageHeader.responsible  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader ;
+	    rdfs:range fhir:Practitioner,
+				   fhir:Organization.	
+
+### fhir:MessageHeader.reason			
+fhir:MessageHeader.reason  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader ;
+	    rdfs:range fhir:CodeableConcept.
+
+### fhir:MessageHeader.data				
+fhir:MessageHeader.data rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader ;
+	    rdfs:range fhir:Resource.		
+		
+####################MessageHeader.MessageDestination
+fhir:MessageHeader.MessageDestination  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.MessageDestination.endpoint ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						] ;
+    rdfs:subClassOf  fhir:DependentResource .
+	
+###fhir:MessageHeader.MessageDestination.name
+fhir:MessageHeader.MessageDestination.name rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageDestination ;
+	rdfs:range fhir:string.
+	
+### fhir:MessageHeader.MessageDestination.target			
+fhir:MessageHeader.MessageDestination.target  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader ;
+	    rdfs:range fhir:Device.
+		
+###fhir:MessageHeader.MessageDestination.endpoint
+fhir:MessageHeader.MessageDestination.endpoint rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageDestination ;
+	rdfs:range fhir:uri.
+	
+	
+####################MessageHeader.Response
+fhir:MessageHeader.Response  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.Response.identifier ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.Response.code ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource .
+	
+###fhir:MessageHeader.Response.identifier
+fhir:MessageHeader.Response.identifier rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.Response ;
+	rdfs:range fhir:id.
+	
+###fhir:MessageHeader.Response.code
+fhir:MessageHeader.Response.code rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.Response ;
+	rdfs:range fhir:code.
+	
+### fhir:MessageHeader.Response.details			
+fhir:MessageHeader.Response.details  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader.Response ;
+	    rdfs:range fhir:OperationOutcome.
+	
+####################MessageHeader.MessageSource
+fhir:MessageHeader.MessageSource  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.MessageSource.software;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MessageHeader.MessageSource.endpoint ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						] ;
+    rdfs:subClassOf  fhir:DependentResource .
+
+###fhir:MessageHeader.MessageSource.name
+fhir:MessageHeader.MessageSource.name rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageSource ;
+	rdfs:range fhir:string.
+	
+###fhir:MessageHeader.MessageSource.software
+fhir:MessageHeader.MessageSource.software rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageSource ;
+	rdfs:range fhir:string.
+	
+###fhir:MessageHeader.MessageSource.version
+fhir:MessageHeader.MessageSource.version rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageSource ;
+	rdfs:range fhir:string.
+	
+### fhir:MessageHeader.MessageSource.contact		
+fhir:MessageHeader.MessageSource.contact  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain  fhir:MessageHeader.Response ;
+	    rdfs:range fhir:Contact.	
+		
+###fhir:MessageHeader.MessageSource.endpoint
+fhir:MessageHeader.MessageSource.endpoint rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MessageHeader.MessageSource ;
+	rdfs:range fhir:uri.

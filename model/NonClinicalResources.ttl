@@ -1,0 +1,3065 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+
+#######Provenance
+fhir:Provenance rdf:type owl:Class ; 
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.recorded;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:instant
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.target ;
+							owl:onClass fhir:Resource;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+	rdfs:subClassOf  fhir:Resource  .
+	
+### fhir:Provenance.entity				
+fhir:Provenance.entity  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Provenance.Entity  ;
+    rdfs:domain  fhir:Provenance .
+	
+### fhir:Provenance.agent			
+fhir:Provenance.agent  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Provenance.Agent ;
+    rdfs:domain  fhir:Provenance .
+
+####provenance.target	
+fhir:Provenance.target rdf:type owl:ObjectProperty ;
+            
+            rdfs:domain fhir:Provenance ;
+            
+            rdfs:range 	fhir:Resource .
+
+
+######Provenance.period
+fhir:Provenance.period rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Provenance ;
+    rdfs:range fhir:Period . 
+	
+					   
+######Provenance.recorded
+fhir:Provenance.recorded rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance;
+    rdfs:range fhir:instant.
+	
+######Provenance.reason
+fhir:Provenance.reason rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Provenance ;
+    rdfs:range fhir:CodeableConcept. 
+	
+######Provenance.location
+fhir:Provenance.location rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Provenance ;
+    rdfs:range fhir:Location . 
+	
+######Provenance.policy
+fhir:Provenance.policy rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Provenance ;
+    rdfs:range fhir:uri.
+	
+######Provenance.integritySignature 
+fhir:Provenance.integritySignature  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance ;
+    rdfs:range fhir:string.
+	
+#####################Provenance.Entity
+fhir:Provenance.Entity rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Entity.role;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Entity.reference;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Entity.type ;
+							owl:onClass fhir:Coding;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;						  
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+### fhir:Provenance.entity.agent				
+fhir:Provenance.Entity.agent  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Provenance.Agent  ;
+    rdfs:domain  fhir:Provenance.Entity .
+	
+######Provenance.Entity.role 
+fhir:Provenance.Entity.role  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance.Entity ;
+    rdfs:range fhir:code.
+
+######Provenance.Entity.type
+fhir:Provenance.Entity.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Provenance.Entity ;
+	rdfs:range fhir:Coding .
+	
+######Provenance.Entity.reference 
+fhir:Provenance.Entity.reference  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance.Entity ;
+    rdfs:range fhir:uri.
+	
+######Provenance.Entity.display 
+fhir:Provenance.Entity.display  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance.Entity ;
+    rdfs:range fhir:string.	
+	
+###############Provenance.Agent
+fhir:Provenance.Agent rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Agent.reference;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Agent.role;
+							owl:onClass fhir:Coding;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						], 
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Provenance.Agent.type ;
+							owl:onClass fhir:Coding;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;						  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+####fhir:Provenance.Agent.role
+fhir:Provenance.Agent.role  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Provenance.Agent ;
+	rdfs:range fhir:Coding .
+	
+####fhir:Provenance.Agent.type
+fhir:Provenance.Agent.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Provenance.Agent ;
+	rdfs:range fhir:Coding .
+	
+######Provenance.Agent.reference 
+fhir:Provenance.Agent.reference  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance.Entity ;
+    rdfs:range fhir:uri.	
+	
+######Provenance.Agent.display 
+fhir:Provenance.Agent.display  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Provenance.Entity ;
+    rdfs:range fhir:string.	
+
+	
+##################################fhir:OperationOutcome
+fhir:OperationOutcome rdf:type owl:Class ; 
+	owl:equivalentClass	[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:OperationOutcome.issue ;
+							owl:onClass fhir:OperationOutcome.Issue;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+	rdfs:subClassOf  fhir:Resource  .
+
+### fhir:OperationOutcome.issue							   
+fhir:OperationOutcome.issue rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:OperationOutcome ;
+	 rdfs:range fhir:OperationOutcome.Issue .
+					   
+### fhir:OperationOutcome.Issue
+fhir:OperationOutcome.Issue  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:OperationOutcome.Issue.severity ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+###fhir:OperationOutcome.Issue.severity
+fhir:OperationOutcome.Issue.severity rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:OperationOutcome.Issue ;
+    rdfs:range fhir:code.
+	
+### fhir:OperationOutcome.Issue.type					
+fhir:Location.Position  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:range fhir:Coding ;
+    rdfs:domain  fhir:OperationOutcome.Issue  .
+	
+###fhir:OperationOutcome.Issue.details
+fhir:OperationOutcome.Issue.details rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:OperationOutcome.Issue ;
+    rdfs:range fhir:string.
+	
+###fhir:OperationOutcome.Issue.location
+fhir:OperationOutcome.Issue.location rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:OperationOutcome.Issue ;
+    rdfs:range fhir:string.
+
+##########################Query		
+fhir:Query  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Query.identifier ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Query.parameter;
+							owl:onClass fhir:Extension;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						];
+    rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:Query.response						   
+fhir:Query.response rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Query ;
+    rdfs:range fhir:Query.Response.
+	
+###fhir:Query.identifier
+fhir:Query.identifier rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Query ;
+	rdfs:range fhir:uri.
+	
+###fhir:Query.parameter
+fhir:Query.parameter rdf:type owl:ObjectProperty ;            
+            rdfs:domain fhir:Query ;          
+            rdfs:range fhir:Extension .	
+					   
+####################Query.Response
+fhir:Query.Response  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Query.Response.outcome ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Query.Response.identifier ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:uri
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:Query.Response.identifier
+fhir:Query.Response.identifier rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Query.Response ;
+	rdfs:range fhir:uri.
+	
+###fhir:Query.Response.outcome
+fhir:Query.Response.outcome rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Query.Response ;
+	rdfs:range fhir:code.
+	
+###fhir:Query.Response.total
+fhir:Query.Response.total rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Query.Response ;
+	rdfs:range fhir:uri.
+	
+### fhir:Query.Response.parameter					
+fhir:Query.Response.parameter  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Extension .
+	
+### fhir:Query.Response.first					
+fhir:Query.Response.first  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Extension .
+	
+### fhir:Query.Response.previous					
+fhir:Query.Response.previous  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Extension .
+	
+### fhir:Query.Response.next					
+fhir:Query.Response.next  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Extension .
+	
+### fhir:Query.Response.last					
+fhir:Query.Response.last  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Extension .
+	
+### fhir:Query.Response.reference					
+fhir:Query.Response.reference  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Query.Response;
+    rdfs:range fhir:Resource .
+
+#########################SecurityEvent
+fhir:SecurityEvent rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.source ;
+							owl:onClass fhir:SecurityEvent.Source;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.event ;
+							owl:onClass fhir:SecurityEvent.Event;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.participant ;
+							owl:onClass fhir:SecurityEvent.Participant;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						];
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:SecurityEvent.Object							   
+fhir:SecurityEvent.object rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent ;
+    rdfs:range fhir:SecurityEvent.Object.
+	
+### fhir:SecurityEvent.Source							   
+fhir:SecurityEvent.source rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent ;
+    rdfs:range fhir:SecurityEvent.Source .
+	
+### fhir:SecurityEvent.Event							   
+fhir:SecurityEvent.event rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent ;
+    rdfs:range fhir:SecurityEvent.Event .
+	
+###fhir:SecurityEvent.participant
+fhir:SecurityEvent.participant rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent ;
+	rdfs:range fhir:SecurityEvent.Participant .
+
+################SecurityEvent.Source
+fhir:SecurityEvent.Source  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Source.identifier;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:SecurityEvent.Source.site
+fhir:SecurityEvent.Source.site rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Source ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Source.identifier
+fhir:SecurityEvent.Source.identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Source ;
+    rdfs:range fhir:string.
+	
+### fhir:SecurityEvent.Source.type				
+fhir:SecurityEvent.Source.type  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Source;
+    rdfs:range fhir:Coding .
+	
+################SecurityEvent.Event
+fhir:SecurityEvent.Event rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Event.dateTime;
+							owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:instant
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Event.type ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###SecurityEvent.Event.type
+fhir:SecurityEvent.Event.type rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:RelatedPerson ;
+	rdfs:range fhir:CodeableConcept .
+							  
+### fhir:SecurityEvent.Event.subtype				
+fhir:SecurityEvent.Event.type  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Event;
+    rdfs:range fhir:CodeableConcept .		
+	
+###fhir:SecurityEvent.Event.action
+fhir:SecurityEvent.Event.action rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Event ;
+    rdfs:range fhir:code.
+	
+###fhir:SecurityEvent.Event.dateTime
+fhir:SecurityEvent.Event.dateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Event ;
+    rdfs:range fhir:instant.
+	
+###fhir:SecurityEvent.Event.outcome
+fhir:SecurityEvent.Event.outcome rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Event ;
+    rdfs:range fhir:code.
+	
+###fhir:SecurityEvent.Event.outcomeDesc
+fhir:SecurityEvent.Event.outcomeDesc rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Event ;
+    rdfs:range fhir:string.
+	
+################SecurityEvent.Participant
+fhir:SecurityEvent.Participant rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Participant.requestor;
+							owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:SecurityEvent.Participant.network						   
+fhir:SecurityEvent.Participant.network rdf:type owl:FunctionalProperty, 
+owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent.Participant ;
+    rdfs:range fhir:Group.SecurityEvent.Participant.Network.
+	
+### fhir:SecurityEvent.Participant.role				
+fhir:SecurityEvent.Participant.role  rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Participant;
+    rdfs:range fhir:CodeableConcept .		
+	
+### fhir:SecurityEvent.Participant.reference			
+fhir:SecurityEvent.Participant.reference  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Participant;
+    rdfs:range fhir:Practitioner , 
+			   fhir:Patient ,
+			   fhir:Device . 
+			   
+	
+###fhir:SecurityEvent.Participant.userId
+fhir:SecurityEvent.Participant.userId rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Participant.altId
+fhir:SecurityEvent.Participant.altId rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant ;
+    rdfs:range fhir:string.
+
+###fhir:SecurityEvent.Participant.name
+fhir:SecurityEvent.Participant.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant ;
+    rdfs:range fhir:string.	
+	
+###fhir:SecurityEvent.Participant.requestor
+fhir:SecurityEvent.Participant.requestor rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant ;
+    rdfs:range fhir:string.
+	
+### fhir:SecurityEvent.Participant.media			
+fhir:SecurityEvent.Participant.media  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Participant;
+    rdfs:range fhir:Coding.	
+	
+################SecurityEvent.Participant.Network
+fhir:SecurityEvent.Participant.Network rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:SecurityEvent.Participant.Network.identifier
+fhir:SecurityEvent.Participant.Network.identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant.Network ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Participant.Network.type
+fhir:SecurityEvent.Participant.Network.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Participant.Network ;
+    rdfs:range fhir:code.
+	
+	
+################SecurityEvent.Object
+fhir:SecurityEvent.Object rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:SecurityEvent.Object.Detail						   
+fhir:SecurityEvent.Object.detail rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:Group.SecurityEvent.Object.Detail.
+
+### fhir:SecurityEvent.Object.identifier			
+fhir:SecurityEvent.Participant.identifier  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Object;
+    rdfs:range fhir:Identifier.	
+	
+### fhir:SecurityEvent.Object.reference			
+fhir:SecurityEvent.Participant.reference  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Object;
+    rdfs:range fhir:Resource.	
+
+###fhir:SecurityEvent.Object.type
+fhir:SecurityEvent.Object.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:code.	
+	
+###fhir:SecurityEvent.Object.role
+fhir:SecurityEvent.Object.role rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:code.
+	
+###fhir:SecurityEvent.Object.lifecycle
+fhir:SecurityEvent.Object.lifecycle rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:code.
+	
+### fhir:SecurityEvent.Object.sensitivity	
+fhir:SecurityEvent.Participant.sensitivity  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SecurityEvent.Object;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:SecurityEvent.Object.name
+fhir:SecurityEvent.Object.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Object.description
+fhir:SecurityEvent.Object.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Object.query
+fhir:SecurityEvent.Object.query rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object ;
+    rdfs:range fhir:base64Binary.
+	
+################SecurityEvent.Object.Detail
+fhir:SecurityEvent.Object.Detail rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Object.Detail.type;
+							owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:SecurityEvent.Object.Detail.value;
+							owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:base64Binary
+						] ;						  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:SecurityEvent.Object.Detail.type
+fhir:SecurityEvent.Object.Detail.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object.Detail ;
+    rdfs:range fhir:string.
+	
+###fhir:SecurityEvent.Object.Detail.value
+fhir:SecurityEvent.Object.Detail.value rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:SecurityEvent.Object.Detail ;
+    rdfs:range fhir:base64Binary.
+
+######################################################Profile
+fhir:Profile rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.status;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;	
+	rdfs:subClassOf  fhir:Resource  .
+
+### fhir:profile.mapping							   
+fhir:Profile.mapping rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Profile.Mapping.	
+	
+### fhir:profile.extensionDefn							   
+fhir:Profile.extensionDefn rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Profile.ExtensionDefn.	
+	
+### fhir:profile.query							   
+fhir:Profile.query rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Profile.Query.	
+	
+### fhir:profile.structure							   
+fhir:Profile.structure rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Profile.Structure.	
+	
+###Profile.identifier
+fhir:Profile.identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+###Profile.version
+fhir:Profile.version rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+###Profile.name
+fhir:Profile.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+###Profile.publisher
+fhir:Profile.publisher rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+### fhir:profile.telecom							   
+fhir:Profile.telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Contact.	
+	
+###Profile.description
+fhir:Profile.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+### fhir:profile.code							   
+fhir:Profile.code rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Profile ;
+    rdfs:range fhir:Coding.	
+	
+###Profile.status
+fhir:Profile.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:code.
+	
+###Profile.experimental
+fhir:Profile.experimental rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:boolean.
+	
+###Profile.date
+fhir:Profile.date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:dateTime.
+	
+###Profile.requirements
+fhir:Profile.requirements rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:string.
+	
+###Profile.fhirVersion
+fhir:Profile.fhirVersion rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile;
+    rdfs:range fhir:id.
+	
+#############################Profile.ExtensionDefn
+fhir:Profile.ExtensionDefn  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.code;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						   
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.contextType;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						   
+						] ,							  
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.ExtensionDefn.context ;
+							owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+                        ],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.ExtensionDefn.definition ;
+							owl:onClass fhir:Profile.ExtensionDefn.ElementDefinition;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:Profile.ExtensionDefn.definition							   	
+fhir:Profile.ExtensionDefn.definition  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+	rdfs:domain  fhir:Profile.ExtensionDefn  ;
+	rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition .
+
+###Profile.ExtensionDefn.code
+fhir:Profile.ExtensionDefn.code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn;
+    rdfs:range fhir:code.
+	
+###Profile.ExtensionDefn.display
+fhir:Profile.ExtensionDefn.display rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn;
+    rdfs:range fhir:string.
+
+###Profile.ExtensionDefn.contextType
+fhir:Profile.ExtensionDefn.contextType rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn;
+    rdfs:range fhir:code.
+
+###Profile.ExtensionDefn.context
+fhir:Profile.ExtensionDefn.context rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn;
+    rdfs:range fhir:string.	
+	
+###############################Profile.ExtensionDefn.ElementDefinition
+fhir:Profile.ExtensionDefn.ElementDefinition  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.short;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.formal;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,	
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.min;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:integer
+						] ,		
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.max;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,	
+						[ 	
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.isModifier;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+                        ] ;								  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:Profile.ExtensionDefn.ElementDefinition.constraint							   
+fhir:Profile.ExtensionDefn.ElementDefinition.constraint rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition ;
+    rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition.Constraint.
+	
+### fhir:Profile.ExtensionDefn.ElementDefinition.mapping							   
+fhir:Profile.ExtensionDefn.ElementDefinition.mapping rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition ;
+    rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition.Mapping.
+
+### fhir:Profile.ExtensionDefn.ElementDefinition.type							   
+fhir:Profile.ExtensionDefn.ElementDefinition.type rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition ;
+    rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef.	
+	
+### fhir:Profile.ExtensionDefn.ElementDefinition.binding							   
+fhir:Profile.ExtensionDefn.ElementDefinition.binding rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition ;
+    rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition.Binding.
+	
+###Profile.ExtensionDefn.ElementDefinition.short
+fhir:Profile.ExtensionDefn.ElementDefinition.short rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.formal
+fhir:Profile.ExtensionDefn.ElementDefinition.formal rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.comments
+fhir:Profile.ExtensionDefn.ElementDefinition.comments rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.requirements
+fhir:Profile.ExtensionDefn.ElementDefinition.requirements rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.synonym
+fhir:Profile.ExtensionDefn.ElementDefinition.synonym rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.min
+fhir:Profile.ExtensionDefn.ElementDefinition.min rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:integer.
+	
+###Profile.ExtensionDefn.ElementDefinition.max
+fhir:Profile.ExtensionDefn.ElementDefinition.max rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.
+
+###Profile.ExtensionDefn.ElementDefinition.nameReference
+fhir:Profile.ExtensionDefn.ElementDefinition.nameReference rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:string.	
+	
+#############value
+#############example
+
+###Profile.ExtensionDefn.ElementDefinition.maxLength
+fhir:Profile.ExtensionDefn.ElementDefinition.maxLength rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:integer.
+
+###Profile.ExtensionDefn.ElementDefinition.condition
+fhir:Profile.ExtensionDefn.ElementDefinition.condition rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:id.	
+	
+###Profile.ExtensionDefn.ElementDefinition.mustSupport
+fhir:Profile.ExtensionDefn.ElementDefinition.mustSupport rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:boolean.
+
+###Profile.ExtensionDefn.ElementDefinition.isModifier
+fhir:Profile.ExtensionDefn.ElementDefinition.isModifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition;
+    rdfs:range fhir:boolean.
+
+##############################Profile.ExtensionDefn.ElementDefinition.Constraint
+fhir:Profile.ExtensionDefn.ElementDefinition.Constraint  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Constraint.key;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Constraint.severity;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ,	
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Constraint.human;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,	
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Constraint.xpath;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ;							  
+								  
+    rdfs:subClassOf  fhir:DependentResource  .		
+	
+###Profile.ExtensionDefn.ElementDefinition.Constraint.key
+fhir:Profile.ExtensionDefn.ElementDefinition.key rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Constraint;
+    rdfs:range fhir:id.
+	
+###Profile.ExtensionDefn.ElementDefinition.Constraint.name
+fhir:Profile.ExtensionDefn.ElementDefinition.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Constraint;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.Constraint.severity
+fhir:Profile.ExtensionDefn.ElementDefinition.severity rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Constraint;
+    rdfs:range fhir:code.
+	
+###Profile.ExtensionDefn.ElementDefinition.Constraint.human
+fhir:Profile.ExtensionDefn.ElementDefinition.human rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Constraint;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.Constraint.xpath
+fhir:Profile.ExtensionDefn.ElementDefinition.Constraint.xpath rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Constraint;
+    rdfs:range fhir:string.
+	
+##############################Profile.ExtensionDefn.ElementDefinition.Mapping
+fhir:Profile.ExtensionDefn.ElementDefinition.Mapping  rdf:type owl:Class ;
+	owl:equivalentClass [ 	
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Mapping.identity;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Mapping.map;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						];							  
+								  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Profile.ExtensionDefn.ElementDefinition.Mapping.identity
+fhir:Profile.ExtensionDefn.ElementDefinition.identity rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Mapping;
+    rdfs:range fhir:id.
+	
+###Profile.ExtensionDefn.ElementDefinition.Mapping.map
+fhir:Profile.ExtensionDefn.ElementDefinition.Mapping.map rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Mapping;
+    rdfs:range fhir:string.
+
+##############################Profile.ExtensionDefn.ElementDefinition.TypeRef
+fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef  rdf:type owl:Class ;
+	owl:equivalentClass [ 	
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.TypeRef.code;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code 
+						] ;							  								  
+    rdfs:subClassOf  fhir:DependentResource  .		
+	
+###Profile.ExtensionDefn.ElementDefinition.TypeRef.code
+fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef.code rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef;
+    rdfs:range fhir:code.	
+	
+###Profile.ExtensionDefn.ElementDefinition.TypeRef.profile
+fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef.profile rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef;
+    rdfs:range fhir:uri.	
+	
+###Profile.ExtensionDefn.ElementDefinition.TypeRef.aggregation
+fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef.aggregation rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.TypeRef;
+    rdfs:range fhir:code.	
+	
+##############################Profile.ExtensionDefn.ElementDefinition.Binding
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Binding.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.ExtensionDefn.ElementDefinition.Binding.isExtensible;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						] ;							  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+###Profile.ExtensionDefn.ElementDefinition.Binding.name
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding;
+    rdfs:range fhir:string.	
+
+###Profile.ExtensionDefn.ElementDefinition.Binding.isExtensible
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.isExtensible rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding;
+    rdfs:range fhir:boolean.	
+	
+###Profile.ExtensionDefn.ElementDefinition.Binding.conformance
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.conformance rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding;
+    rdfs:range fhir:code.
+	
+###Profile.ExtensionDefn.ElementDefinition.Binding.description
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding;
+    rdfs:range fhir:string.
+	
+###Profile.ExtensionDefn.ElementDefinition.Binding.referenceUri
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.referenceUri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding;
+    rdfs:range fhir:uri.
+
+### fhir:Profile.ExtensionDefn.ElementDefinition.Binding.referenceValueSet						   
+fhir:Profile.ExtensionDefn.ElementDefinition.Binding.referenceValueSet rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Profile.ExtensionDefn.ElementDefinition.Binding ;
+    rdfs:range fhir:ValuseSet.
+
+##############################Profile.Structure
+fhir:Profile.Structure  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.type;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						];						  
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+	
+### fhir:Profile.Structure.Element							   
+fhir:Profile.Structure.element rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.Structure ;
+    rdfs:range fhir:Profile.Structure.Element.	
+	
+### fhir:Profile.Structure.searchParam							   
+fhir:Profile.Structure.searchParam  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.Structure ;
+    rdfs:range fhir:Profile.Structure.SearchParam.	
+	
+
+	
+###Profile.Structure.type
+fhir:Profile.Structure.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure;
+    rdfs:range fhir:code.
+	
+###Profile.Structure.name
+fhir:Profile.Structure.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure;
+    rdfs:range fhir:string.
+	
+###Profile.Structure.publish
+fhir:Profile.Structure.publish rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure;
+    rdfs:range fhir:boolean.
+	
+###Profile.Structure.purpose
+fhir:Profile.Structure.purpose rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure;
+    rdfs:range fhir:string.
+	
+#########################Profile.Structure.Element
+fhir:Profile.Structure.Element  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.Element.path;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string 
+						] ;							  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:Profile.Structure.Element.slicing							   
+fhir:Profile.Structure.Element.slicing rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.Structure.Element ;
+    rdfs:range fhir:Profile.Structure.Element.Slicing.			
+
+### fhir:Profile.Structure.Element.definition							   
+fhir:Profile.Structure.Element.definition rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.Structure.Element ;
+    rdfs:range fhir:Profile.ExtensionDefn.ElementDefinition.	
+	
+###Profile.Structure.Element.path
+fhir:Profile.Structure.Element.path rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.Element;
+    rdfs:range fhir:string.
+	
+###Profile.Structure.Element.representation
+fhir:Profile.Structure.Element.representation rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Profile.Structure.Element;
+    rdfs:range fhir:code.
+	
+###Profile.Structure.Element.name
+fhir:Profile.Structure.Element.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.Element;
+    rdfs:range fhir:string.
+	
+
+#########################Profile.Structure.Element.Slicing
+fhir:Profile.Structure.Element.Slicing  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.Element.Slicing.discriminator;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id 
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.Element..Slicing.ordered;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean  
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.Element..Slicing.rules;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code 
+						];							  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Profile.Structure.Element.Slicing.discriminator
+fhir:Profile.Structure.Element.Slicing.discriminator rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.Element.Slicing;
+    rdfs:range fhir:id.
+	
+###Profile.Structure.Element.Slicing.ordered
+fhir:Profile.Structure.Element.Slicing.ordered rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.Element.Slicing;
+    rdfs:range fhir:boolean.
+	
+###Profile.Structure.Element.Slicing.rules
+fhir:Profile.Structure.Element.Slicing.rules rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.Element.Slicing;
+    rdfs:range fhir:code.
+	
+##################################Profile.Structure.SearchParam
+fhir:Profile.Structure.SearchParam  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.SearchParam.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.SearchParam.type;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Structure.SearchParam.documentation;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						];							  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Profile.Structure.SearchParam.name
+fhir:Profile.Structure.SearchParam.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.SearchParam;
+    rdfs:range fhir:string.
+	
+###Profile.Structure.SearchParam.type
+fhir:Profile.Structure.SearchParam.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.SearchParam;
+    rdfs:range fhir:code.
+	
+###Profile.Structure.SearchParam.documentation
+fhir:Profile.Structure.SearchParam.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.SearchParam;
+    rdfs:range fhir:string.
+	
+###Profile.Structure.SearchParam.xpath
+fhir:Profile.Structure.SearchParam.xpath rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Structure.SearchParam;
+    rdfs:range fhir:string.
+	
+###Profile.Structure.SearchParam.target
+fhir:Profile.Structure.SearchParam.target rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Profile.Structure.SearchParam;
+    rdfs:range fhir:code.
+	
+###############################Profile.Query
+fhir:Profile.Query  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Query.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,	
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Query.documentation;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string  
+						] ;									  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:Profile.Query.parameter							   
+fhir:Profile.Query.parameter rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Profile.Query ;
+    rdfs:range fhir:Profile.Structure.SearchParam.
+	
+###Profile.Query.name
+fhir:Profile.Query.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Query;
+    rdfs:range fhir:string.
+	
+###Profile.Query.documentation
+fhir:Profile.Query.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Query;
+    rdfs:range fhir:string.
+	
+######################################Profile.Mapping
+fhir:Profile.Mapping  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:profile.Mapping.identity;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:id
+						] ;									  
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###Profile.Mapping.identity
+fhir:Profile.Mapping.identity rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Mapping;
+    rdfs:range fhir:id.
+	
+###Profile.Mapping.uri
+fhir:Profile.Mapping.uri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Mapping;
+    rdfs:range fhir:uri.
+	
+###Profile.Mapping.name
+fhir:Profile.Mapping.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Mapping;
+    rdfs:range fhir:string.
+	
+###Profile.Mapping.comments
+fhir:Profile.Mapping.comments rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Profile.Mapping;
+    rdfs:range fhir:string.
+	
+	
+	
+###########################Conformance
+	fhir:Conformance rdf:type owl:Class ;  
+	owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.publisher;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,
+	 [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.date;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,	
+	[ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.fhirVersion;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,	
+ [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.acceptUnknown;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,	
+      [ rdf:type owl:Restriction ;
+                           owl:onProperty fhir:Conformance.format ;
+                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         ] ;							  
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:Conformance.messaging						   
+fhir:Conformance.messaging rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Conformance.Messaging.
+	
+ ### fhir:Conformance.rest						   
+fhir:Conformance.rest rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Conformance.Rest.
+	
+ ### fhir:Conformance.document						   
+fhir:Conformance.document rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Conformance.Document.
+	
+ ### fhir:Conformance.implementation						   
+fhir:Conformance.implementation rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Conformance.Implementation.
+
+ ### fhir:Conformance.software						   
+fhir:Conformance.software rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Conformance.Software.
+	
+###Conformance.identifier
+fhir:Conformance.identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.identifier;
+    rdfs:range fhir:string.
+	
+###Conformance.version
+fhir:Conformance.version rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.version;
+    rdfs:range fhir:string.
+	
+###Conformance.name
+fhir:Conformance.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.name;
+    rdfs:range fhir:string.
+	
+###Conformance.publisher
+fhir:Conformance.publisher rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.publisher;
+    rdfs:range fhir:string.
+	
+ ### fhir:Conformance.telecom						   
+fhir:Conformance.telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Contact.
+	
+###Conformance.description
+fhir:Conformance.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:string.
+	
+###Conformance.status
+fhir:Conformance.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:code.
+	
+###Conformance.experimental
+fhir:Conformance.experimental rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:boolean.
+	
+###Conformance.date
+fhir:Conformance.date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:dateTime.
+	
+###Conformance.fhirVersion
+fhir:Conformance.fhirVersion rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:id.
+	
+###Conformance.acceptUnknown
+fhir:Conformance.acceptUnknown rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:boolean.
+	
+###Conformance.format
+fhir:Conformance.format rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance;
+    rdfs:range fhir:code.
+	
+
+ ### fhir:Conformance.profile						   
+fhir:Conformance.profile rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Conformance ;
+    rdfs:range fhir:Profile.	
+
+###############fhir:Conformance.Rest
+fhir:Conformance.Rest  rdf:type owl:Class ;
+	owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.mode ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+
+	
+	
+	### fhir:Conformance.Operation							   
+fhir:Conformance.Rest.operation rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest ;
+    rdfs:range fhir:Conformance.Rest.Operation.	
+	
+	### fhir:Conformance.query						   
+fhir:Conformance.Rest.query rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest ;
+    rdfs:range fhir:Conformance.Rest.Query.	
+	
+	### fhir:Conformance.security						   
+fhir:Conformance.Rest.security rdf:type owl:DatatypeProperty,
+owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest ;
+    rdfs:range fhir:Conformance.Rest.Security.	
+
+### fhir:Conformance.resource	
+fhir:Conformance.Rest.resource rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+  rdfs:range fhir:Conformance.Rest.Resource;
+    rdfs:domain fhir:Conformance.Rest ;
+    rdfs:range [ rdf:type owl:Class ;
+                         owl:intersectionOf ( fhir:Conformance.Rest
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty fhir:Conformance.Rest.resource ;
+                                                owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                              ]
+                                            )
+                       ] .
+					   
+
+	
+###Conformance.Rest.mode
+fhir:Conformance.Rest.mode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.documentation
+fhir:Conformance.Rest.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.documentMailbox
+fhir:Conformance.Rest.documentMailbox rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest;
+    rdfs:range fhir:uri.
+
+#############################Conformance.Rest.Resource
+fhir:Conformance.Rest  rdf:type owl:Class ;
+	owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Resource.type ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+fhir:Conformance.Rest.Resource.operation rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+  rdfs:range fhir:Conformance.Rest.Resource.Operation;
+    rdfs:domain fhir:Conformance.Rest.Resource ;
+    rdfs:range [ rdf:type owl:Class ;
+                         owl:intersectionOf ( fhir:Conformance.Rest
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty fhir:Conformance.Rest.Resource.operation ;
+                                                owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                              ]
+                                            )
+                       ] .
+					   
+### fhir:Conformance.Rest.Resource.searchParam							   
+fhir:Conformance.Rest.Resource.searchParam rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam ;
+    rdfs:range fhir:Conformance.Operation.
+	
+###Conformance.Rest.Resource.type
+fhir:Conformance.Rest.Resource.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource;
+    rdfs:range fhir:code.
+
+### fhir:Conformance.Rest.Resource.profile					   
+fhir:Conformance.Rest.Resource.profile rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Conformance.Rest.Resource ;
+    rdfs:range fhir:Profile.	
+	
+###Conformance.Rest.Resource.readHistory
+fhir:Conformance.Rest.Resource.readHistory rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource;
+    rdfs:range fhir:boolean.
+	
+###Conformance.Rest.Resource.updateCreate
+fhir:Conformance.Rest.Resource.updateCreate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource;
+    rdfs:range fhir:boolean.
+	
+###Conformance.Rest.Resource.searchInclude
+fhir:Conformance.Rest.Resource.searchInclude rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource;
+    rdfs:range fhir:string.
+	
+#############################Conformance.Rest.Resource.Operation
+fhir:Conformance.Rest.Resource.Operation rdf:type owl:Class ;
+	owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Resource.Operation.code ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Conformance.Rest.Resource.Operation.code
+fhir:Conformance.Rest.Resource.updateCreate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Operation;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.Resource.Operation.code
+fhir:Conformance.Rest.Resource.updateCreate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Operation;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.Resource.Operation.documentation
+fhir:Conformance.Rest.Resource.Operation.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Operation;
+    rdfs:range fhir:string.
+	
+#############################Conformance.Rest.Resource.SearchParam
+fhir:Conformance.Rest.Resource.SearchParam rdf:type owl:Class ;
+	owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Resource.SearchParam.name ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,
+	 [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Resource.SearchParam.type ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;						  
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###Conformance.Rest.Resource.SearchParam.name
+fhir:Conformance.Rest.Resource.SearchParam.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:string.
+	
+###Conformance.Rest.Resource.SearchParam.definition
+fhir:Conformance.Rest.Resource.SearchParam.definition rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:uri.
+	
+###Conformance.Rest.Resource.SearchParam.type
+fhir:Conformance.Rest.Resource.SearchParam.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.Resource.SearchParam.documentation
+fhir:Conformance.Rest.Resource.SearchParam.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:string.
+	
+###Conformance.Rest.Resource.SearchParam.target
+fhir:Conformance.Rest.Resource.SearchParam.target rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:code.
+
+###Conformance.Rest.Resource.SearchParam.chain
+fhir:Conformance.Rest.Resource.SearchParam.chain rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.SearchParam;
+    rdfs:range fhir:string.
+	
+################Conformance.Rest.Security
+fhir:Conformance.Rest.Security  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+					   
+### fhir:Conformance.Rest.Security.certificate							   
+fhir:Conformance.Rest.Security.certificate rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest.Security ;
+    rdfs:range fhir:Conformance.Rest.Security.Certificate.
+	
+###Conformance.Rest.Resource.Security.cors
+fhir:Conformance.Rest.Resource.Security.cors rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Security;
+    rdfs:range fhir:boolean.
+
+
+	
+###Conformance.Rest.Resource.Security.description
+fhir:Conformance.Rest.Resource.Security.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Security;
+    rdfs:range fhir:string.
+	
+### fhir:Conformance.Rest.Resource.Security.service							   
+fhir:Conformance.Rest.Resource.Security.service rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Conformance.Rest.Resource.Security ;
+    rdfs:range fhir:CodeableConcept.
+	
+################Conformance.Rest.Security.Certificate
+fhir:Conformance.Rest.Security.Certificate  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###Conformance.Rest.Resource.Security.Certificate.type
+fhir:Conformance.Rest.Resource.Security.Certificate.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Certificate;
+    rdfs:range fhir:code.
+	
+###Conformance.Rest.Resource.Security.Certificate.blob
+fhir:Conformance.Rest.Resource.Security.Certificate.blob rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Resource.Certificate;
+    rdfs:range fhir:base64Binary.
+	
+#################################Conformance.Rest.Query
+fhir:Conformance.Rest.Query  rdf:type owl:Class ;
+		owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Query.name ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,
+	 [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Rest.Query.definition ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:Conformance.Rest.Query.parameter							   
+fhir:Conformance.Rest.Query.parameter rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Conformance.Rest.Query ;
+    rdfs:range fhir:Conformance.Rest.Resource.SearchParam.
+	
+###Conformance.Rest.Query.name
+fhir:Conformance.Rest.Query.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Query;
+    rdfs:range fhir:string.
+	
+###Conformance.Rest.Query.definition
+fhir:Conformance.Rest.Query.definition rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Query;
+    rdfs:range fhir:uri.
+	
+###Conformance.Rest.Query.documentation
+fhir:Conformance.Rest.Query.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Rest.Query;
+    rdfs:range fhir:string.
+	
+############################Conformance.messaging
+fhir:Conformance.Messaging  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+### fhir:Conformance.Messaging.event	
+fhir:Conformance.Messaging.event rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+  rdfs:range fhir:Conformance.Messaging.Event;
+    rdfs:domain fhir:Conformance.Rest ;
+    rdfs:range [ rdf:type owl:Class ;
+                         owl:intersectionOf ( fhir:Conformance.Messaging.Event
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty fhir:Conformance.Messaging.event ;
+                                                owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                              ]
+                                            )
+                       ] .
+
+###Conformance.Messaging.endpoint
+fhir:Conformance.Messaging.endpoint rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging;
+    rdfs:range fhir:uri.
+	
+###Conformance.Messaging.reliableCache
+fhir:Conformance.Messaging.reliableCache rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging;
+    rdfs:range fhir:integer.
+	
+###Conformance.Messaging.documentation
+fhir:Conformance.Messaging.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging;
+    rdfs:range fhir:string.
+	
+################Conformance.Messaging.Event
+fhir:Conformance.Messaging.Event  rdf:type owl:Class ;
+		owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Messaging.Event.focus ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ,
+		[ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Messaging.Event.mode ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;				  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+	fhir:Conformance.Messaging.Event.code  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance.Messaging.Event ;
+	rdfs:range 
+	[ rdf:type owl:Class ;
+        owl:intersectionOf 
+		( fhir:Coding
+            [ rdf:type owl:Restriction ;
+            owl:onProperty fhir:Conformance.Messaging.Event.code ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+            ]
+        )
+    ] .
+	
+	fhir:Conformance.Messaging.Event.request  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance.Messaging.Event ;
+	rdfs:range 
+	[ rdf:type owl:Class ;
+        owl:intersectionOf 
+		( fhir:Profile
+            [ rdf:type owl:Restriction ;
+            owl:onProperty fhir:Conformance.Messaging.Event.request ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+            ]
+        )
+    ] .
+	
+	fhir:Conformance.Messaging.Event.response  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance.Messaging.Event ;
+	rdfs:range 
+	[ rdf:type owl:Class ;
+        owl:intersectionOf 
+		( fhir:Profile
+            [ rdf:type owl:Restriction ;
+            owl:onProperty fhir:Conformance.Messaging.Event.response ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+            ]
+        )
+    ] .
+	
+
+### fhir:Conformance.Messaging.Event.protocol							   
+fhir:Conformance.Messaging.Event.protocol rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Conformance.Messaging.Event ;
+    rdfs:range fhir:Coding.	
+	
+###Conformance.Messaging.Event.category
+fhir:Conformance.Messaging.Event.category rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging.Event;
+    rdfs:range fhir:code.	
+	
+###Conformance.Messaging.Event.mode
+fhir:Conformance.Messaging.Event.mode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging.Event;
+    rdfs:range fhir:code.
+	
+###Conformance.Messaging.Event.focus
+fhir:Conformance.Messaging.Event.focus rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging.Event;
+    rdfs:range fhir:code.
+	
+###Conformance.Messaging.Event.documentation
+fhir:Conformance.Messaging.Event.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Messaging.Event;
+    rdfs:range fhir:string.
+	
+################################Conformance.software
+fhir:Conformance.Software  rdf:type owl:Class ;
+		owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Software.name ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;				  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Conformance.Software.name
+fhir:Conformance.Software.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Software;
+    rdfs:range fhir:string.
+	
+###Conformance.Software.version
+fhir:Conformance.Software.version rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Software;
+    rdfs:range fhir:string.
+	
+###Conformance.Software.releaseDate
+fhir:Conformance.Software.releaseDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Software;
+    rdfs:range fhir:dateTime.
+	
+################################Conformance.implementation
+fhir:Conformance.Implementation  rdf:type owl:Class ;
+		owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Implementation.description ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;				  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Conformance.Implementation.description
+fhir:Conformance.Implementation.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Implementation;
+    rdfs:range fhir:string.
+	
+###Conformance.Implementation.url
+fhir:Conformance.Implementation.url rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Implementation;
+    rdfs:range fhir:uri.
+	
+################################Conformance.Document
+fhir:Conformance.Implementation  rdf:type owl:Class ;
+		owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty fhir:Conformance.Document.mode;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              ] ;				  
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###Conformance.Document.mode
+fhir:Conformance.Document.mode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Document;
+    rdfs:range fhir:code.
+	
+###Conformance.Document.documentation
+fhir:Conformance.Document.documentation rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Conformance.Document;
+    rdfs:range fhir:string.
+	
+###Conformance.Document.profile	
+fhir:Conformance.Document.profile rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Conformance.Document ;
+	rdfs:range 
+	[ rdf:type owl:Class ;
+        owl:intersectionOf 
+		( fhir:Profile
+            [ rdf:type owl:Restriction ;
+            owl:onProperty fhir:Conformance.Document.profile ;
+            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+            ]
+        )
+    ] .
+
+#### DSTU2 Resource StructureDefinition
+### StructureDefinition
+fhir:StructureDefinition rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.name;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ,
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Profile.status;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;	
+	rdfs:subClassOf  fhir:Resource  .
+
+### fhir:StructureDefinition.snapshot							   
+fhir:StructureDefinition.snapshot rdf:type owl:ObjectProperty, owl:FunctionalProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:StructureDefinition ;
+    rdfs:range fhir:StructureDefinition.Snapshot .
+	
+### fhir:StructureDefinition.differential							   
+fhir:StructureDefinition.differential rdf:type owl:ObjectProperty, owl:FunctionalProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:StructureDefinition ;
+    rdfs:range fhir:StructureDefinition.Differential .
+	
+### fhir:StructureDefinition.mapping						   
+fhir:StructureDefinition.mapping rdf:type owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:StructureDefinition ;
+    rdfs:range fhir:StructureDefinition.Mapping .
+
+### fhir:StructureDefinition.contact						   
+fhir:StructureDefinition.contact rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:StructureDefinition ;
+    rdfs:range fhir:StructureDefinition.Contact .
+
+### fhir:StructureDefinition.url
+fhir:StructureDefinition.url rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:uri .
+	
+### fhir:StructureDefinition.identifier
+fhir:StructureDefinition.identifier rdf:type owl:ObjectProperty
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:Identifier .
+
+### fhir:StructureDefinition.version
+fhir:StructureDefinition.version rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.name
+fhir:StructureDefinition.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.useContext
+fhir:StructureDefinition.useContext rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:CodeableConcept .
+	
+### fhir:StructureDefinition.display
+fhir:StructureDefinition.display rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.publisher
+fhir:StructureDefinition.publisher rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.description
+fhir:StructureDefinition.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.requirements
+fhir:StructureDefinition.requirements rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.copyright
+fhir:StructureDefinition.copyright rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.code
+fhir:StructureDefinition.Coding rdf:type owl:ObjectProperty
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:Coding .
+	
+### fhir:StructureDefinition.status
+fhir:StructureDefinition.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:code .
+	
+### fhir:StructureDefinition.experimental
+fhir:StructureDefinition.experimental rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:boolean .
+	
+### fhir:StructureDefinition.date
+fhir:StructureDefinition.date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:dateTime .
+	
+### fhir:StructureDefinition.fhirVersion
+fhir:StructureDefinition.fhirVersion rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:id .
+	
+### fhir:StructureDefinition.type
+fhir:StructureDefinition.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:code .
+	
+### fhir:StructureDefinition.abstract
+fhir:StructureDefinition.abstract rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:boolean .
+	
+### fhir:StructureDefinition.contextType
+fhir:StructureDefinition.contextType rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:code .
+	
+### fhir:StructureDefinition.context
+fhir:StructureDefinition.context rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.base
+fhir:StructureDefinition.base rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition;
+    rdfs:range fhir:uri .
+	
+##############################StructureDefinition.Snapshot
+fhir:StructureDefinition.Snapshot  rdf:type owl:Class ;					  
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+	
+### fhir:StructureDefinition.Snapshot.element						   
+fhir:StructureDefinition.Snapshot.element rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Snapshot;
+    rdfs:range fhir:ElementDefinition .	
+	
+##############################StructureDefinition.Differential
+fhir:StructureDefinition.Differential  rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+	
+### fhir:StructureDefinition.Differential.element						   
+fhir:StructureDefinition.Differential.element rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Differential;
+    rdfs:range fhir:ElementDefinition .	
+	
+	
+##############################StructureDefinition.Contact
+fhir:StructureDefinition.Contact  rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+### fhir:StructureDefinition.Contact.name
+fhir:StructureDefinition.Contact.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Contact;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.Contact.telecom						   
+fhir:StructureDefinition.Contact.telecom rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:StructureDefinition.Contact;
+    rdfs:range fhir:Contact .	
+
+	
+##############################StructureDefinition.Mapping
+fhir:StructureDefinition.Mapping  rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+### fhir:StructureDefinition.Mapping.identifier
+fhir:StructureDefinition.Mapping.identifier rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Mapping;
+    rdfs:range fhir:id .
+	
+### fhir:StructureDefinition.Mapping.uri
+fhir:StructureDefinition.Mapping.uri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Mapping;
+    rdfs:range fhir:uri .
+	
+### fhir:StructureDefinition.Mapping.name
+fhir:StructureDefinition.Mapping.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Mapping;
+    rdfs:range fhir:string .
+	
+### fhir:StructureDefinition.Mapping.comments
+fhir:StructureDefinition.Mapping.comments rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:StructureDefinition.Mapping;
+    rdfs:range fhir:string .
+	
+	
+##############################ElementDefinition
+fhir:ElementDefinition rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:Resource  .		
+	
+### fhir:ElementDefinition.path
+fhir:ElementDefinition.path rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+
+### fhir:ElementDefinition.representation
+fhir:ElementDefinition.representation rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:code .
+	
+### fhir:ElementDefinition.name
+fhir:ElementDefinition.name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.label
+fhir:ElementDefinition.label rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.code						   
+fhir:ElementDefinition.code rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Coding .	
+	
+### fhir:ElementDefinition.short
+fhir:ElementDefinition.short rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+
+	
+### fhir:ElementDefinition.definition
+fhir:ElementDefinition.definition rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.comments
+fhir:ElementDefinition.comments rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.requirements
+fhir:ElementDefinition.requirements rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.alias
+fhir:ElementDefinition.alias rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.min
+fhir:ElementDefinition.min rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+### fhir:ElementDefinition.max
+fhir:ElementDefinition.max rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+### fhir:ElementDefinition.nameReference
+fhir:ElementDefinition.nameReference rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.defaultValueInteger
+fhir:ElementDefinition.defaultValueInteger rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+	
+### fhir:ElementDefinition.defaultValueDecimal
+fhir:ElementDefinition.defaultValueDecimal rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:decimal .
+	
+	
+### fhir:ElementDefinition.defaultValueDateTime
+fhir:ElementDefinition.defaultValueDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:dateTime .
+	
+	
+### fhir:ElementDefinition.defaultValueDate
+fhir:ElementDefinition.defaultValueDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:date .
+	
+	
+### fhir:ElementDefinition.defaultValueInstant
+fhir:ElementDefinition.defaultValueInstant rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:instant .
+	
+	
+	
+### fhir:ElementDefinition.defaultValueString
+fhir:ElementDefinition.defaultValueString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+	
+### fhir:ElementDefinition.defaultValueUri
+fhir:ElementDefinition.defaultValueUri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:uri .
+	
+	
+### fhir:ElementDefinition.defaultValueBoolean
+fhir:ElementDefinition.defaultValueBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+	
+	
+### fhir:ElementDefinition.defaultValueCode
+fhir:ElementDefinition.defaultValueCode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:code .
+	
+	
+### fhir:ElementDefinition.defaultValueBase64Binary
+fhir:ElementDefinition.defaultValueBase64Binary rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:base64Binary .
+	
+	
+### fhir:ElementDefinition.defaultValueCoding
+fhir:ElementDefinition.defaultValueCoding rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Coding .
+	
+### fhir:ElementDefinition.defaultValueCodeableConcept
+fhir:ElementDefinition.defaultValueCodeableConcept rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:CodeableConcept .
+	
+### fhir:ElementDefinition.defaultValueIdentifier
+fhir:ElementDefinition.defaultValueIdentifier rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Identifier .
+
+### fhir:ElementDefinition.defaultValueAttachment
+fhir:ElementDefinition.defaultValueAttachment rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Attachment .
+
+### fhir:ElementDefinition.defaultValueQuantity
+fhir:ElementDefinition.defaultValueQuantity rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Quantity .
+	
+### fhir:ElementDefinition.defaultValueRange
+fhir:ElementDefinition.defaultValueRange rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Range .
+
+### fhir:ElementDefinition.defaultValuePeriod
+fhir:ElementDefinition.defaultValuePeriod rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Period .
+	
+### fhir:ElementDefinition.defaultValueRatio
+fhir:ElementDefinition.defaultValueRatio rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Ratio .
+	
+### fhir:ElementDefinition.defaultValueHumanName
+fhir:ElementDefinition.defaultValueHumanName rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:HumanName .
+	
+### fhir:ElementDefinition.defaultValueAddress
+fhir:ElementDefinition.defaultValueAddress rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Address .
+	
+### fhir:ElementDefinition.defaultValueContact
+fhir:ElementDefinition.defaultValueContact rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Contact .
+	
+### fhir:ElementDefinition.defaultValueSchedule 
+fhir:ElementDefinition.defaultValueSchedule  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Schedule .
+	
+### fhir:ElementDefinition.defaultValueResource
+fhir:ElementDefinition.defaultValueResource  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Resource .
+	
+### fhir:ElementDefinition.meaningWhenMissing 
+fhir:ElementDefinition.meaningWhenMissing  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.fixedInteger
+fhir:ElementDefinition.defaultValueInteger rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+	
+### fhir:ElementDefinition.fixedDecimal
+fhir:ElementDefinition.fixedDecimal rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:decimal . 
+	
+	
+### fhir:ElementDefinition.fixedDateTime
+fhir:ElementDefinition.fixedDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:dateTime .
+	
+	
+### fhir:ElementDefinition.fixedDate
+fhir:ElementDefinition.fixedDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:date .
+	
+	
+### fhir:ElementDefinition.fixedInstant
+fhir:ElementDefinition.fixedInstant rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:instant .
+	
+	
+	
+### fhir:ElementDefinition.fixedString
+fhir:ElementDefinition.fixedString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string.
+	
+	
+### fhir:ElementDefinition.fixedUri
+fhir:ElementDefinition.fixedUri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:uri .
+	
+	
+### fhir:ElementDefinition.fixedBoolean
+fhir:ElementDefinition.fixedBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+	
+	
+### fhir:ElementDefinition.fixedCode
+fhir:ElementDefinition.fixedCode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:code .
+	
+	
+### fhir:ElementDefinition.fixedBase64Binary
+fhir:ElementDefinition.fixedBase64Binary rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:base64Binary .
+	
+	
+### fhir:ElementDefinition.fixedCoding
+fhir:ElementDefinition.fixedCoding rdf:type owl:ObjectProperty
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Coding .
+	
+### fhir:ElementDefinition.fixedCodeableConcept
+fhir:ElementDefinition.fixedCodeableConcept rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:CodeableConcept .
+	
+### fhir:ElementDefinition.fixedIdentifier
+fhir:ElementDefinition.fixedIdentifier rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Identifier .
+
+### fhir:ElementDefinition.fixedAttachment
+fhir:ElementDefinition.fixedAttachment rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Attachment .
+
+### fhir:ElementDefinition.fixedQuantity
+fhir:ElementDefinition.fixedQuantity rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Quantity . 
+	
+### fhir:ElementDefinition.fixedRange
+fhir:ElementDefinition.fixedRange rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Range .
+
+### fhir:ElementDefinition.fixedPeriod
+fhir:ElementDefinition.fixedPeriod rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Period .
+	
+### fhir:ElementDefinition.fixedRatio
+fhir:ElementDefinition.fixedRatio rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Ratio .
+	
+### fhir:ElementDefinition.fixedHumanName
+fhir:ElementDefinition.fixedHumanName rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:HumanName .
+	
+### fhir:ElementDefinition.fixedAddress
+fhir:ElementDefinition.fixedAddress rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Address .
+	
+### fhir:ElementDefinition.fixedContact
+fhir:ElementDefinition.fixedContact rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Contact .
+	
+### fhir:ElementDefinition.fixedSchedule 
+fhir:ElementDefinition.fixedSchedule  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Schedule .
+	
+### fhir:ElementDefinition.fixedResource
+fhir:ElementDefinition.fixedResource  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Resource .
+	
+### fhir:ElementDefinition.patternInteger
+fhir:ElementDefinition.patternInteger rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+	
+### fhir:ElementDefinition.patternDecimal
+fhir:ElementDefinition.patternDecimal rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:decimal .
+	
+	
+### fhir:ElementDefinition.patternDateTime
+fhir:ElementDefinition.patternDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:dateTime .
+	
+	
+### fhir:ElementDefinition.patternDate
+fhir:ElementDefinition.patternDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:date .
+	
+	
+### fhir:ElementDefinition.patternInstant
+fhir:ElementDefinition.patternInstant rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:instant .
+	
+	
+	
+### fhir:ElementDefinition.patternString
+fhir:ElementDefinition.patternString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string .
+	
+	
+### fhir:ElementDefinition.patternUri
+fhir:ElementDefinition.patternUri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:uri .
+	
+	
+### fhir:ElementDefinition.patternBoolean
+fhir:ElementDefinition.patternBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+	
+	
+### fhir:ElementDefinition.patternCode
+fhir:ElementDefinition.patternCode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:code .
+	
+	
+### fhir:ElementDefinition.patternBase64Binary
+fhir:ElementDefinition.patternBase64Binary rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:base64Binary .
+	
+	
+### fhir:ElementDefinition.patternCoding
+fhir:ElementDefinition.patternCoding rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Coding .
+	
+### fhir:ElementDefinition.patternCodeableConcept
+fhir:ElementDefinition.patternCodeableConcept rdf:type owl:ObjectProperty, 
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:CodeableConcept .
+	
+### fhir:ElementDefinition.patternIdentifier
+fhir:ElementDefinition.patternIdentifier rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Identifier .
+
+### fhir:ElementDefinition.patternAttachment
+fhir:ElementDefinition.patternAttachment rdf:type owl:ObjectProperty , 
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Attachment .
+
+### fhir:ElementDefinition.patternQuantity
+fhir:ElementDefinition.patternQuantity rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Quantity .
+	
+### fhir:ElementDefinition.patternRange
+fhir:ElementDefinition.patternRange rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Range .
+
+### fhir:ElementDefinition.patternPeriod
+fhir:ElementDefinition.patternPeriod rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Period .
+	
+### fhir:ElementDefinition.patternRatio
+fhir:ElementDefinition.patternRatio rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Ratio .
+	
+### fhir:ElementDefinition.patternHumanName
+fhir:ElementDefinition.patternHumanName rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:HumanName .
+	
+### fhir:ElementDefinition.patternAddress
+fhir:ElementDefinition.patternAddress rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Address .
+	
+### fhir:ElementDefinition.patternContact
+fhir:ElementDefinition.patternContact rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Contact .
+	
+### fhir:ElementDefinition.patternSchedule 
+fhir:ElementDefinition.patternSchedule  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Schedule .
+	
+### fhir:ElementDefinition.patternResource
+fhir:ElementDefinition.patternResource  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Resource .
+	
+### fhir:ElementDefinition.exampleInteger
+fhir:ElementDefinition.exampleInteger rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+	
+	
+### fhir:ElementDefinition.exampleDecimal
+fhir:ElementDefinition.exampleDecimal rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:decimal .
+	
+	
+### fhir:ElementDefinition.exampleDateTime
+fhir:ElementDefinition.exampleDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:dateTime .
+	
+	
+### fhir:ElementDefinition.exampleDate
+fhir:ElementDefinition.exampleDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:date .
+	
+	
+### fhir:ElementDefinition.exampleInstant
+fhir:ElementDefinition.exampleInstant rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:instant .
+	
+	
+### fhir:ElementDefinition.exampleString
+fhir:ElementDefinition.exampleString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:string.
+	
+	
+### fhir:ElementDefinition.exampleUri
+fhir:ElementDefinition.exampleUri rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:uri .
+	
+	
+### fhir:ElementDefinition.exampleBoolean
+fhir:ElementDefinition.exampleBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+	
+	
+### fhir:ElementDefinition.exampleCode
+fhir:ElementDefinition.exampleCode rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:code .
+	
+	
+### fhir:ElementDefinition.exampleBase64Binary
+fhir:ElementDefinition.exampleBase64Binary rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition ;
+    rdfs:range fhir:base64Binary .
+	
+	
+### fhir:ElementDefinition.exampleCoding
+fhir:ElementDefinition.exampleCoding rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Coding .
+	
+### fhir:ElementDefinition.exampleCodeableConcept
+fhir:ElementDefinition.exampleCodeableConcept rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:CodeableConcept .
+	
+### fhir:ElementDefinition.exampleIdentifier
+fhir:ElementDefinition.exampleIdentifier rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Identifier .
+
+### fhir:ElementDefinition.exampleAttachment
+fhir:ElementDefinition.exampleAttachment rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Attachment .
+
+### fhir:ElementDefinition.exampleQuantity
+fhir:ElementDefinition.exampleQuantity rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Quantity .
+	
+### fhir:ElementDefinition.exampleRange
+fhir:ElementDefinition.exampleRange rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Range .
+
+### fhir:ElementDefinition.examplePeriod
+fhir:ElementDefinition.examplePeriod rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Period .
+	
+### fhir:ElementDefinition.exampleRatio
+fhir:ElementDefinition.exampleRatio rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Ratio .
+	
+### fhir:ElementDefinition.exampleHumanName
+fhir:ElementDefinition.exampleHumanName rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:HumanName .
+	
+### fhir:ElementDefinition.exampleAddress
+fhir:ElementDefinition.exampleAddress rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Address .
+	
+### fhir:ElementDefinition.exampleContact
+fhir:ElementDefinition.exampleContact rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Contact .
+	
+### fhir:ElementDefinition.exampleSchedule 
+fhir:ElementDefinition.exampleSchedule  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Schedule .
+	
+### fhir:ElementDefinition.exampleResource
+fhir:ElementDefinition.exampleResource  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:Resource .
+
+### fhir:ElementDefinition.maxLength
+fhir:ElementDefinition.maxLength  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:integer .
+
+### fhir:ElementDefinition.condition
+fhir:ElementDefinition.condition rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:ElementDefinition ;
+    rdfs:range fhir:id . 	
+	
+### fhir:ElementDefinition.mustSupport
+fhir:ElementDefinition.mustSupport  rdf:type owl:DatatypeProperty
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+
+	
+### fhir:ElementDefinition.isModifier
+fhir:ElementDefinition.isModifier  rdf:type owl:DatatypeProperty
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+
+	
+### fhir:ElementDefinition.isSummary
+fhir:ElementDefinition.isSummary  rdf:type owl:DatatypeProperty
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:boolean .
+	
+### fhir:ElementDefinition.slicing						   
+fhir:ElementDefinition.slicing rdf:type owl:ObjectProperty ,
+	owl:FunctionalProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:ElementDefinition.Slicing .
+	
+
+### fhir:ElementDefinition.mapping						   
+fhir:ElementDefinition.mapping rdf:type owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:ElementDefinition.Mapping .
+	
+### fhir:ElementDefinition.constraint						   
+fhir:ElementDefinition.constraint rdf:type owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:ElementDefinition.Constraint .
+
+	
+### fhir:ElementDefinition.type						   
+fhir:ElementDefinition.type rdf:type owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:ElementDefinition.TypeRef .
+	
+### fhir:ElementDefinition.binding					   
+fhir:ElementDefinition.binding rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:ElementDefinition;
+    rdfs:range fhir:ElementDefinition.Binding .
+	
+##############################ElementDefinition.Slicing
+fhir:ElementDefinition rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .
+
+### fhir:ElementDefinition.Slicing.discriminator
+fhir:ElementDefinition.Slicing.discriminator  rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:ElementDefinition.Slicing;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.Slicing.description
+fhir:ElementDefinition.Slicing.description  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Slicing;
+    rdfs:range fhir:string .
+
+### fhir:ElementDefinition.Slicing.ordered
+fhir:ElementDefinition.Slicing.ordered  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Slicing;
+    rdfs:range fhir:boolean	.
+	
+### fhir:ElementDefinition.Slicing.rules
+fhir:ElementDefinition.Slicing.rules  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Slicing;
+    rdfs:range fhir:code .
+	
+##############################ElementDefinition.Constraint
+fhir:ElementDefinition.Constraint rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .
+
+### fhir:ElementDefinition.Constraint.key
+fhir:ElementDefinition.Constraint.key  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Constraint;
+    rdfs:range fhir:id .
+	
+### fhir:ElementDefinition.Constraint.name
+fhir:ElementDefinition.Constraint.name  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Constraint;
+    rdfs:range fhir:string .
+
+### fhir:ElementDefinition.Constraint.severity
+fhir:ElementDefinition.Constraint.severity  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Constraint;
+    rdfs:range fhir:code .
+
+
+### fhir:ElementDefinition.Constraint.human
+fhir:ElementDefinition.Constraint.human rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Constraint;
+    rdfs:range fhir:string .
+	
+	
+### fhir:ElementDefinition.Constraint.xpath
+fhir:ElementDefinition.Constraint.xpath  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Constraint;
+    rdfs:range fhir:string .
+
+
+##############################ElementDefinition.TypeRef
+fhir:ElementDefinition.TypeRef rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .
+
+### fhir:ElementDefinition.TypeRef.code
+fhir:ElementDefinition.TypeRef.code  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.TypeRef;
+    rdfs:range fhir:code .
+
+	
+### fhir:ElementDefinition.TypeRef.profile
+fhir:ElementDefinition.TypeRef.profile  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.TypeRef;
+    rdfs:range fhir:uri .
+
+
+### fhir:ElementDefinition.TypeRef.aggregation
+fhir:ElementDefinition.TypeRef.aggregation  rdf:type owl:DatatypeProperty;
+    rdfs:domain fhir:ElementDefinition.TypeRef;
+    rdfs:range fhir:code .
+	
+##############################ElementDefinition.Binding
+fhir:ElementDefinition.Binding rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .
+
+### fhir:ElementDefinition.Binding.name
+fhir:ElementDefinition.Binding.name  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Binding;
+    rdfs:range fhir:string .
+	
+### fhir:ElementDefinition.Binding.strength
+fhir:ElementDefinition.Binding.strength  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Binding;
+    rdfs:range fhir:code .
+
+### fhir:ElementDefinition.Binding.description
+fhir:ElementDefinition.Binding.description  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Binding;
+    rdfs:range fhir:string .	
+	
+### fhir:ElementDefinition.Binding.valueSetUri
+fhir:ElementDefinition.Binding.valueSetUri  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Binding;
+    rdfs:range fhir:uri .	
+	
+### fhir:ElementDefinition.Binding.valueSetResource
+fhir:ElementDefinition.Binding.valueSetResource  rdf:type owl:ObjectProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Binding;
+    rdfs:range fhir:Resource .
+	
+##############################ElementDefinition.Mapping
+fhir:ElementDefinition.Mapping rdf:type owl:Class ;				  
+    rdfs:subClassOf  fhir:DependentResource  .
+
+### fhir:ElementDefinition.Mapping.identity
+fhir:ElementDefinition.Mapping.identity  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Mapping;
+    rdfs:range fhir:id .
+
+### fhir:ElementDefinition.Mapping.language
+fhir:ElementDefinition.Mapping.language  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Mapping;
+    rdfs:range fhir:code .
+	
+
+### fhir:ElementDefinition.Mapping.map
+fhir:ElementDefinition.Mapping.map  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:ElementDefinition.Mapping;
+    rdfs:range fhir:string .

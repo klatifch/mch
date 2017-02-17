@@ -1,0 +1,656 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+# Element
+fhir:Element  rdf:type owl:Class .
+
+# DependentResource
+fhir:DependentResource rdf:type owl:Class .
+
+#Composition
+fhir:composition rdf:type owl:ObjectProperty .
+
+########################################
+
+
+# Attachment
+
+fhir:Attachment rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Attachment_contentType ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange xsd:integer
+						] ;
+	rdfs:subClassOf  fhir:Element .
+
+###ContentType
+fhir:Attachment_contentType rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>It shows the type of data in attachment.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:code.
+	             
+						
+###language
+fhir:Attachment_language rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>Human language of the content.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:code .
+
+	
+	
+###data	
+fhir:Attachment_data rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>Actual data of attachment. it shows sequence of byes. sampledata: series of data points sepearated by single space.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment  ;
+	rdfs:range fhir:base64Binary .
+	
+###url
+fhir:Attachment_url rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>Alternative location where data can be accessed.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:uri .
+
+
+###size
+fhir:Attachment_size rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>Bytes of data that make up this attachment. DocRef: size of document reference in bytes.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:integer .
+
+###hash
+fhir:Attachment_hash rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:comment "<p>Calculated hash of data DocRef: hash of source document to ensure that changes are not occured.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:base64Binary .
+
+###title
+fhir:Attachment_title rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;
+	rdfs:comment "<p>Text to display in place of data.</p>"^^xsd:string ;
+	rdfs:domain fhir:Attachment ;
+	rdfs:range fhir:string .
+
+
+##############################
+
+### Address
+
+ fhir:Address  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element  .
+								 
+								 
+###	fhir:use
+
+fhir:Address_use rdf:type owl:DatatypeProperty ,
+owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:code .
+
+###	fhir:text
+
+fhir:Address_text rdf:type owl:DatatypeProperty ,
+owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+							  
+							  
+###	fhir:line
+
+fhir:Address_line rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+							   
+###	fhir:city
+
+fhir:Address_city rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+							   
+###	fhir:state
+
+fhir:Address_state rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+							
+###	fhir:zip
+fhir:Address_zip rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+							   
+###	fhir:country
+
+fhir:Address_country rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Address ;
+	rdfs:range fhir:string .	
+						
+
+### fhir:period						
+fhir:Address_period  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Period  ;
+	rdfs:domain  fhir:Address  .	
+
+							   
+############################################################
+							   
+### CodeableConcept
+
+fhir:CodeableConcept rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+	
+
+### fhir:coding						
+fhir:CodeableConcept_coding  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty;
+	rdfs:range fhir:Coding  ;
+	rdfs:domain  fhir:CodeableConcept  .	
+
+###	fhir:text
+
+fhir:CodeableConcept_text rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:CodeableConcept ;
+	rdfs:range fhir:string .	
+
+
+##################################################							   
+
+### Coding
+
+fhir:Coding rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+							   
+
+###	fhir:system
+
+fhir:Coding_system rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Coding ;
+	rdfs:range fhir:uri .
+
+###	fhir:version
+
+fhir:Coding_version rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Coding ;
+	rdfs:range fhir:string .
+
+###	fhir:code
+fhir:Coding_code rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Coding ;
+	rdfs:range fhir:code .
+
+###	fhir:display
+
+fhir:Coding_display rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Coding ;
+	rdfs:range fhir:string .
+
+###	fhir:primary
+
+fhir:Coding_primary rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Coding ;
+	rdfs:range fhir:boolean .
+
+###	fhir:valueSet
+					
+fhir:Coding_valueSet rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:ValueSet  ;
+	rdfs:domain  fhir:Coding  .	
+
+
+###################################################
+
+### Contact
+
+fhir:Contact rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element.
+							   
+
+###	fhir:system
+
+fhir:Contact_system rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Contact ;
+	rdfs:range fhir:code.
+							   
+###	fhir:value
+
+fhir:Contact_value rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Contact ;
+	rdfs:range fhir:string.
+
+###	fhir:use
+
+fhir:Contact_use rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Contact ;
+	rdfs:range fhir:code .							   
+
+### fhir:period						
+fhir:Contact_period  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Period  ;
+	rdfs:domain  fhir:Contact  .
+
+##################################################
+
+###HumanName
+							   
+fhir:HumanName rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+							   
+
+###	fhir:use
+
+fhir:HumanName_use rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:code .
+							   
+###	fhir:text
+
+fhir:HumanName_text rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:string .
+
+###	fhir:family
+
+fhir:HumanName_family rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:string.
+
+###	fhir:given
+
+fhir:HumanName_given rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:string .
+
+###	fhir:prefix
+
+fhir:HumanName_prefix rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:string .
+
+###	fhir:suffix
+
+fhir:HumanName_suffix rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:HumanName ;
+	rdfs:range fhir:string .
+
+### fhir:period						
+fhir:HumanName_period  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Period  ;
+	rdfs:domain  fhir:HumanName  .						   
+							   
+							   
+#############################################3
+
+### Identifier						   
+fhir:Identifier rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+
+###	fhir:use
+
+fhir:Identifier_use rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Identifier ;
+	rdfs:range fhir:code .
+							   
+
+###	fhir:label
+
+fhir:Identifier_label rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Identifier ;
+	rdfs:range fhir:string .
+
+							   
+###	fhir:system
+
+fhir:Identifier_system rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Identifier ;
+	rdfs:range fhir:uri .
+
+
+###	fhir:value
+
+fhir:Identifier_value rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Identifier ;
+	rdfs:range fhir:string .
+							   						   
+
+### fhir:period						
+fhir:Identifier_period  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Period  ;
+	rdfs:domain  fhir:Identifier  .	
+
+### fhir:assigner						
+fhir:Identifier_assigner  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Organization  ;
+	rdfs:domain  fhir:Identifier  .
+
+
+####################################################
+
+###Period
+							   
+fhir:Period rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+
+###	fhir:start
+
+fhir:Period_start rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Period ;
+	rdfs:range fhir:dateTime .
+							   
+							   
+###	fhir:end
+
+fhir:Period_end rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Period ;
+	rdfs:range fhir:dateTime .	
+###############################################
+
+###Quantity
+							   
+fhir:Quantity rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+	
+###	fhir:value
+
+fhir:Quantity_value rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Quantity ;
+	rdfs:range fhir:decimal .	
+							   
+###	fhir:comparator
+
+fhir:Quantity_comparator rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Quantity ;
+	rdfs:range fhir:code .	
+
+###	fhir:units
+
+fhir:Quantity_units rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Quantity ;
+	rdfs:range fhir:string .	
+
+###	fhir:system
+
+fhir:Quantity_system rdf:type owl:DatatypeProperty, 
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Quantity ;
+	rdfs:range fhir:uri .	
+
+###	fhir:code
+
+fhir:Quantity_code rdf:type owl:DatatypeProperty, 
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Quantity ;
+	rdfs:range fhir:code .
+
+###########################################
+
+###Range
+							   
+fhir:Range rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+	
+### fhir:low						
+fhir:Range_low  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Quantity  ;
+	rdfs:domain  fhir:Range  .	
+
+### fhir:high						
+fhir:Range_high  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Quantity  ;
+	rdfs:domain  fhir:Range  .	
+##################################################
+
+							   
+###Ratio
+							   
+fhir:Ratio rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .
+	
+### fhir:numerator						
+fhir:Ratio_numerator  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Quantity  ;
+	rdfs:domain  fhir:Ratio  .	
+
+### fhir:denominator						
+fhir:Range_high  rdf:type owl:FunctionalProperty ,
+	owl:ObjectProperty ;
+	rdfs:range fhir:Quantity  ;
+	rdfs:domain  fhir:Ratio  .
+#######################################################
+
+
+###Repeat
+							   
+fhir:Schedule_Repeat rdf:type owl:Class ;
+owl:equivalentClass [ 
+						rdf:type owl:Restriction ;
+						owl:onProperty fhir:Schedule_Repeat_duration ;
+						owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						owl:onDataRange fhir:decimal
+					] ,
+					[ 
+						rdf:type owl:Restriction ;
+						owl:onProperty fhir:Schedule_Repeat_units ;
+						owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						owl:onDataRange fhir:code
+					] ;
+	rdfs:subClassOf  fhir:DependentResource .
+	
+###	fhir:frequency
+
+fhir:Schedule_Repeat_frequency rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:integer .	
+
+###	fhir:when
+
+fhir:Schedule_Repeat_when rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:code .								   
+							   
+###	fhir:duration
+
+fhir:Schedule_Repeat_duration rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:decimal.
+
+###	fhir:units
+
+fhir:Schedule_Repeat_units rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:code.
+
+###	fhir:count
+
+fhir:Schedule_Repeat_count rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:integer .	
+
+###	fhir:end
+
+fhir:Schedule_Repeat_end rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:Repeat ;
+	rdfs:range fhir:dateTime .
+
+##########################################################
+
+###Schedule
+							   
+fhir:Schedule rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Element .	
+
+
+### fhir:event						
+fhir:Schedule_event  rdf:type owl:ObjectProperty ;
+	rdfs:range fhir:Period  ;
+	rdfs:domain  fhir:Schedule  .
+
+### fhir:repeat
+fhir:Schedule_repeat  rdf:type owl:ObjectProperty ,
+owl:FunctionalProperty;
+rdfs:subPropertyOf fhir:composition ;	
+	rdfs:range fhir:Schedule_Repeat  ;
+	rdfs:domain  fhir:Schedule.
+
+
+##########################################################
+
+###SampleData
+								
+fhir:SampledData rdf:type owl:Class ;
+owl:equivalentClass [ 
+						rdf:type owl:Restriction ;
+						owl:qualifiedCardinality fhir:SampledData_period ;
+						owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						owl:onDataRange fhir:decimal
+					] ,
+					[ 
+						rdf:type owl:Restriction ;
+						owl:qualifiedCardinality fhir:SampledData_dimensions ;
+						owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						owl:onDataRange fhir:integer
+					] ,
+					[
+						rdf:type owl:Restriction ;
+						owl:qualifiedCardinality fhir:SampledData_data ;
+						owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+						owl:onDataRange fhir:string
+					], 
+					[ 
+						rdf:type owl:Restriction ;
+						owl:onProperty fhir:SampledData_origin ;
+						owl:onClass fhir:Quantity;
+						owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+					] ;
+	rdfs:subClassOf  fhir:Element .	
+
+
+### fhir:origin						
+fhir:SampledData_origin  rdf:type 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:SampledData  ;								   
+	rdfs:range  fhir:Quantity .
+
+###	fhir:period
+
+fhir:SampledData_period rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:decimal .
+						
+
+###	fhir:factor
+
+fhir:SampledData_factor rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:decimal .
+							   
+###	fhir:lowerLimit
+
+fhir:SampledData_lowerLimit rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:decimal .		
+
+###	fhir:upperLimit
+
+fhir:SampledData_upperLimit rdf:type owl:DatatypeProperty ,
+	owl:FunctionalProperty ;           
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:decimal .							   
+						
+						
+###	fhir:dimensions
+
+fhir:SampledData_dimensions rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:integer .
+	
+
+###	fhir:data
+
+fhir:SampledData_data rdf:type owl:DatatypeProperty ;
+	rdfs:domain fhir:SampledData ;
+	rdfs:range fhir:string.
+				
+
+#############################################################
+###Age
+							   
+fhir:Age rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Quantity .
+
+#############################################################
+###Distance
+							   
+fhir:Distance rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Quantity .
+
+#############################################################
+###Duration
+							   
+fhir:Duration rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Quantity .
+
+#############################################################
+###Count
+							   
+fhir:Count rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Quantity .	
+	
+#############################################################
+###Money
+							   
+fhir:Money rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Quantity .
+	
+

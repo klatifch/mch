@@ -1,0 +1,532 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+
+########################################################
+
+###HumanAgent
+ fhir:HumanAgent  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource  .
+
+###telecom
+fhir:HumanAgent_telecom  rdf:type  owl:ObjectProperty;
+    rdfs:domain fhir:HumanAgent ;
+    rdfs:range fhir:Contact.
+		
+###gender
+fhir:HumanAgent_gender  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:HumanAgent ;
+    rdfs:range fhir:CodeableConcept.	
+
+###########################################################
+	
+### RelatedPerson
+ fhir:RelatedPerson  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:HumanAgent ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:RelatedPerson_patient ;
+                            owl:onClass fhir:Patient ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+	
+###RelatedPerson_identifier
+fhir:RelatedPerson_identifier  rdf:type  owl:ObjectProperty;
+    rdfs:domain fhir:RelatedPerson ;
+    rdfs:range fhir:Identifier.
+	
+### patient					
+fhir:RelatedPerson_patient  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:RelatedPerson ;
+	rdfs:range fhir:Patient .
+
+###RelatedPerson_relationship
+fhir:RelatedPerson_relationship  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:RelatedPerson ;
+    rdfs:range fhir:CodeableConcept.	
+
+###RelatedPerson_name
+fhir:RelatedPerson_name  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:RelatedPerson ;
+    rdfs:range fhir:HumanName.	
+	
+###RelatedPerson_address
+fhir:RelatedPerson_address  rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:RelatedPerson ;
+    rdfs:range fhir:Address.
+	
+###RelatedPerson_photo
+fhir:RelatedPerson_photo  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:RelatedPerson ;
+    rdfs:range fhir:Attachment.
+
+	
+###########################################
+###Patient
+ fhir:Patient  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:HumanAgent  .
+	
+### fhir:Patient_link						
+fhir:Patient_link  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Patient_Link  ;
+    rdfs:domain  fhir:Patient  .
+	
+### fhir:Patient_animal						
+fhir:Patient_animal rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Patient_Animal  ;
+    rdfs:domain  fhir:Patient  .
+	
+### fhir:Patient_contact						
+fhir:Patient_contact rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Patient_Contact  ;
+    rdfs:domain  fhir:Patient  .
+	
+###Patient_identifier
+fhir:Patient_identifier  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:Identifier.
+	
+###Patient_name
+fhir:Patient_name  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:HumanName.
+	
+### Patient_birthDate								   
+fhir:Patient_birthDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:dateTime.
+	
+###deceased	
+fhir:Patient_deceasedBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:boolean.
+									   
+fhir:Patient_deceasedDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:dateTime.
+	
+###Patient_address
+fhir:Patient_address  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:Address.
+
+###Patient_maritalStatus
+fhir:Patient_maritalStatus  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:CodeableConcept.	
+	
+###multipleBirth
+fhir:Patient_multipleBirthBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:boolean.
+									   
+fhir:Patient_multipleBirthInteger rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:integer.
+
+###Patient_photo
+fhir:Patient_photo  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:Attachment.	
+	
+###Patient_communication
+fhir:Patient_communication  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:CodeableConcept.
+	
+###Patient_careProvider
+fhir:Patient_careProvider  rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:Organization,
+				fhir:Practitioner.
+	
+###Patient_managingOrganization
+	fhir:Patient_managingOrganization rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:Organization.
+
+###active
+fhir:Patient_active rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Patient ;
+    rdfs:range fhir:boolean.
+
+
+fhir:extension rdf:type owl:ObjectProperty;
+rdfs:domain fhir:Patient;
+rdfs:range fhir:Schedule. 	
+	
+#################
+###Patient_animal
+fhir:Patient_Animal  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:Patient_Animal_species ;
+                            owl:onClass fhir:CodeableConcept ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+
+###Animal_species
+	fhir:Patient_Animal_species  rdf:type 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Patient_Animal ;	
+	rdfs:range fhir:CodeableConcept .
+		
+###Animal_breed
+	fhir:Patient_Animal_breed rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Animal ;
+    rdfs:range fhir:CodeableConcept.
+	
+###Animal_genderStatus
+	fhir:Patient_Animal_genderStatus rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Animal ;
+    rdfs:range fhir:CodeableConcept.
+	
+################
+###Patient_link
+fhir:Patient_Link  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Patient_Link_type ;
+							owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+                        [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:Patient_Link_other ;
+                            owl:onClass fhir:Patient ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+	
+###Link_other
+fhir:Patient_Link_other  rdf:type 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Patient_link  ;
+	rdfs:range fhir:Patient .
+		
+	
+###Link_type
+fhir:Patient_Link_type rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:Patient_Link ;
+	rdfs:range fhir:code.
+	
+
+#######################
+###Patient_Contact
+fhir:Patient_Contact  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###Contact_relationship
+fhir:Patient_Contact_relationship rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Contact ;
+    rdfs:range fhir:CodeableConcept.
+	
+###Contact_name
+fhir:Patient_Contact_name rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Contact ;
+    rdfs:range fhir:HumanName.
+	
+###Contact_address
+fhir:Patient_Contact_address rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Contact ;
+    rdfs:range fhir:Address.
+    
+###Contact_telecom
+fhir:Patient_Contact_telecom rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Contact ;
+    rdfs:range fhir:Contact.
+    	
+###Contact_organization
+fhir:Patient_Contact_organization rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Patient_Contact ;
+    rdfs:range fhir:Organization.
+
+	
+#################################################
+###Practitioner
+ fhir:Practitioner  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:HumanAgent  .
+	
+### fhir:Practitioner_Qualification					
+fhir:Practitioner_qualification  rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:range fhir:Practitioner_Qualification ;
+    rdfs:domain  fhir:Practitioner  .
+	
+###Practitioner_identifier
+fhir:Practitioner_identifier rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Identifier.
+
+###Practitioner_name
+fhir:Practitioner_name rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:HumanName.	
+	
+###Practitioner_address
+fhir:Practitioner_address rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Address.
+	
+###Practitioner_birthDate
+fhir:Practitioner_birthDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:dateTime.
+
+###Practitioner_photo
+fhir:Practitioner_photo rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Attachment.
+
+###Practitioner_organization
+fhir:Practitioner_organization rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Organization.
+
+###Practitioner_role
+fhir:Practitioner_role rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:CodeableConcept.
+
+###Practitioner_speciality
+fhir:Practitioner_speciality rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:CodeableConcept.
+
+###Practitioner_period
+fhir:Practitioner_period rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Period.
+
+###Practitioner_location
+fhir:Practitioner_location rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:Location.
+
+###Practitioner_communication
+fhir:Practitioner_communication rdf:type owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner ;
+    rdfs:range fhir:CodeableConcept.
+
+############
+###Practitioner_Qualification
+ fhir:Practitioner_Qualification  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:Practitioner_Qualification_code ;
+                            owl:onClass fhir:CodeableConcept ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+
+
+###
+fhir:Practitioner_Qualification_code rdf:type 
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Patient_Qualification  ;	
+	rdfs:range fhir:CodeableConcept .
+		
+###Qualification_period
+	fhir:Practitioner_Qualification_period rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner_Qualification ;
+    rdfs:range fhir:Period.
+
+###Qualification_issuer
+	fhir:Practitioner_Qualification_issuer rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Practitioner_Qualification ;
+    rdfs:range fhir:Organization.
+
+	
+#####################################################
+######FamilyHistory
+	fhir:FamilyHistory rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:FamilyHistory_subject ;
+                            owl:onClass fhir:Patient ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+	
+### fhir:FamilyHistory_Relation							   
+fhir:FamilyHistory_relation rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:FamilyHistory ;
+    rdfs:range fhir:FamilyHistory_Relation.
+
+###fhir:FamilyHistory_identifier
+fhir:FamilyHistory_identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:FamilyHistory;
+    rdfs:range fhir:Identifier.	
+	
+###fhir:FamilyHistory_subject
+fhir:FamilyHistory_subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:FamilyHistory ;
+	rdfs:range fhir:Patient .
+	
+###FamilyHistory_note
+fhir:FamilyHistory_note rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory ;
+    rdfs:range fhir:string.
+	
+#########################FamilyHistory_Relation
+fhir:FamilyHistory_Relation  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:FamilyHistory_Relation_relationship ;
+                            owl:onClass fhir:CodeableConcept ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+	
+### fhir:FamilyHistory_Relation_Condition							   
+fhir:FamilyHistory_Relation_condition rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:FamilyHistory_Condition.
+	
+###FamilyHistory_Relation_name
+fhir:FamilyHistory_Relation_name rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:string.
+	
+###FamilyHistory_Relation_relationship
+fhir:FamilyHistory_Relation_relationship  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:FamilyHistory_Relation ;
+	rdfs:range fhir:CodeableConcept .
+	
+###fhir:FamilyHistory_Relation_bornPeriod
+fhir:FamilyHistory_Relation_bornPeriod rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:FamilyHistory_Relation;
+    rdfs:range fhir:Period.	
+	
+###FamilyHistory_Relation_bornDate
+fhir:FamilyHistory_Relation_bornDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:date.
+	
+###FamilyHistory_Relation_bornString
+fhir:FamilyHistory_Relation_bornString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:string.
+	
+###FamilyHistory_Relation_deceasedBoolean
+fhir:FamilyHistory_Relation_deceasedBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:boolean.
+
+###FamilyHistory_Relation_deceasedAge
+fhir:FamilyHistory_Relation_deceasedAge rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:Age.
+	
+###FamilyHistory_Relation_deceasedRange
+fhir:FamilyHistory_Relation_deceasedRange rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:Range.
+	
+###FamilyHistory_Relation_deceasedDate
+fhir:FamilyHistory_Relation_deceasedDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:date.
+	
+###FamilyHistory_Relation_deceasedString
+fhir:FamilyHistory_Relation_deceasedString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Relation ;
+    rdfs:range fhir:string.
+	
+##########################FamilyHistory_Relation_Condition
+fhir:FamilyHistory_Relation_Condition  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+                            owl:onProperty fhir:FamilyHistory_Relation_Condition_type ;
+                            owl:onClass fhir:CodeableConcept ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                        ] .
+	
+	
+###FamilyHistory_Relation_Condition_type
+fhir:FamilyHistory_Relation_Condition_type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:FamilyHistory_Condition ;
+	rdfs:range fhir:CodeableConcept .
+	
+###fhir:FamilyHistory_Relation_Condition_outcome
+fhir:FamilyHistory_Relation_Condition_outcome rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:FamilyHistory_Condition;
+    rdfs:range fhir:CodeableConcept.	
+	
+###fhir:FamilyHistory_Relation_Condition_onsetAge
+fhir:FamilyHistory_Relation_Condition_onsetAge rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:FamilyHistory_Condition;
+    rdfs:range fhir:Age.
+	
+###fhir:FamilyHistory_Relation_Condition_onsetRange
+fhir:FamilyHistory_Relation_Condition_onsetRange rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:FamilyHistory_Condition;
+    rdfs:range fhir:Range.
+	
+###FamilyHistory_Relation_Condition_onsetString
+fhir:FamilyHistory_Relation_Condition_onsetString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Condition ;
+    rdfs:range fhir:string.
+	
+###FamilyHistory_Relation_Condition_note
+fhir:FamilyHistory_Relation_Condition_note rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:FamilyHistory_Condition ;
+    rdfs:range fhir:string.

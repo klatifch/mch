@@ -1,0 +1,1360 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+
+##################fhir:CarePlan
+	fhir:CarePlan rdf:type owl:Class ;
+		owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.status ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:CarePlan.goal							   
+fhir:CarePlan.goal rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:CarePlan.Goal.
+	
+### fhir:CarePlan.participant							   
+fhir:CarePlan.participant rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:CarePlan.Participant.	
+	
+### fhir:CarePlan.activity							   
+fhir:CarePlan.activity rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:CarePlan.Activity.
+	
+### fhir:CarePlan.identifier						   
+fhir:CarePlan.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:Identifier.
+	
+### fhir:CarePlan.patient						   
+fhir:CarePlan.patient rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:Patient.
+
+###fhir:CarePlan.status
+fhir:CarePlan.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:code.
+	
+### fhir:CarePlan.period						   
+fhir:CarePlan.period rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:Period.
+	
+###fhir:CarePlan.modified
+fhir:CarePlan.modified rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:dateTime.
+	
+### fhir:CarePlan.concern						   
+fhir:CarePlan.concern rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:Condition.
+	
+###fhir:CarePlan.notes
+fhir:CarePlan.notes rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:string.
+
+################################CarePlan.Goal	
+fhir:CarePlan.Goal  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Goal.description;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:string
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###fhir:CarePlan.Goal.description
+fhir:CarePlan.Goal.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Goal ;
+    rdfs:range fhir:string.
+	
+###fhir:CarePlan.Goal.status
+fhir:CarePlan.Goal.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Goal ;
+    rdfs:range fhir:code.
+	
+###fhir:CarePlan.Goal.notes
+fhir:CarePlan.Goal.notes rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Goal ;
+    rdfs:range fhir:string.
+	
+### fhir:CarePlan.Goal.concern						   
+fhir:CarePlan.Goal.concern rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan ;
+    rdfs:range fhir:Condition.
+	
+#############################CarePlan.Participant
+fhir:CarePlan.Participant  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Participant.member ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Participant.member ;
+							owl:onClass fhir:Practitioner;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Participant.member ;
+							owl:onClass fhir:RelatedPerson;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Participant.member ;
+							owl:onClass fhir:Organization;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:CarePlan.Participant.role					   
+fhir:CarePlan.Participant.role rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Participant;
+    rdfs:range fhir:CodeableConcept.
+	
+
+###fhir:CarePlan.Participant.member
+fhir:CarePlan.Participant.member  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:CarePlan.Participant ;
+	rdfs:range 	fhir:Practitioner, 
+				fhir:RelatedPerson,
+				fhir:Patient,
+				fhir:Organization .
+	
+########################CarePlan.Activity
+fhir:CarePlan.Activity  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Activity.prohibited ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:boolean
+						];
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+### fhir:CarePlan.Activity.simple							   
+fhir:CarePlan.Activity.simple rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:CarePlan.Activity;
+    rdfs:range fhir:CarePlan.Activity.Simple.
+	
+#############goal
+	
+###fhir:CarePlan.Activity.status
+fhir:CarePlan.Activity.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity ;
+    rdfs:range fhir:code.
+	
+###fhir:CarePlan.Activity.prohibited
+fhir:CarePlan.Activity.prohibited rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity ;
+    rdfs:range fhir:boolean.
+	
+### fhir:CarePlan.Activity.actionResulting					   
+fhir:CarePlan.Activity.actionResulting rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity ;
+    rdfs:range fhir:Resource.
+	
+###fhir:CarePlan.Activity.notes
+fhir:CarePlan.Activity.notes rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity ;
+    rdfs:range fhir:string.
+
+### fhir:CarePlan.Activity.detail				   
+fhir:CarePlan.Activity.detail rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity ;
+    rdfs:range fhir:Procedure,
+			   fhir:MedicationPrescription,
+			   fhir:DiagnosticOrder,
+			   fhir:Encounter.
+			   
+			   
+########################CarePlan.Activity.Simple
+fhir:CarePlan.Activity.Simple  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:CarePlan.Activity.Simple.category ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###fhir:CarePlan.Activity.Simple.category
+fhir:CarePlan.Activity..Simple.category rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:code.
+	
+### fhir:CarePlan.Activity.Simple.code				   
+fhir:CarePlan.Activity.Simple.code rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:CodeableConcept.
+	
+### fhir:CarePlan.Activity.Simple.timingSchedule				   
+fhir:CarePlan.Activity.Simple.timingSchedule rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Schedule.
+	
+### fhir:CarePlan.Activity.Simple.timingPeriod				   
+fhir:CarePlan.Activity.Simple.timingPeriod rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Period.
+	
+###fhir:CarePlan.Activity.Simple.timingString
+fhir:CarePlan.Activity.Simple.tmingString rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:string.
+	
+### fhir:CarePlan.Activity.Simple.location				   
+fhir:CarePlan.Activity.Simple.location rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Location.
+	
+### fhir:CarePlan.Activity.Simple.performer				   
+fhir:CarePlan.Activity.Simple.performer rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Practitioner,
+			   fhir:Organization,
+			   fhir:RelatedPerson,
+			   fhir:Patient.
+			   
+### fhir:CarePlan.Activity.Simple.product				   
+fhir:CarePlan.Activity.Simple.product rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Medication,
+			   fhir:Substance.
+			   
+### fhir:CarePlan.Activity.Simple.dailyAmount				   
+fhir:CarePlan.Activity.Simple.dailyAmount rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Quantity.
+	
+### fhir:CarePlan.Activity.Simple.quantity				   
+fhir:CarePlan.Activity.Simple.quantity rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:Quantity.
+	
+###fhir:CarePlan.Activity.Simple.details
+fhir:CarePlan.Activity.Simple.details rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:CarePlan.Activity.Simple ;
+    rdfs:range fhir:string.
+	
+########################################Condition.	
+	fhir:Condition rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Condition.status ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Condition.code ;
+							owl:onClass fhir:CodeableConcept ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Condition.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+	rdfs:subClassOf  fhir:Resource  .
+	
+### fhir:Condition.stage							   
+fhir:Condition.stage rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Condition.Stage.
+	
+	
+### fhir:Condition.evidence						   
+fhir:Condition.evidence rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Condition.Evidence.
+	
+### fhir:Condition.relatedItem							   
+fhir:Condition.relatedItem rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Condition.RelatedItem.
+	
+### fhir:Condition.	location						   
+fhir:Condition.location rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Condition.Location.
+	
+###fhir:Condition.identifier
+fhir:Condition.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Identifier.
+	
+###fhir:Condition.subject
+fhir:Condition.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Condition ;
+	rdfs:range fhir:Patient .
+	
+###fhir:Condition.encounter
+fhir:Condition.encounter rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Encounter.
+	
+###fhir:Condition.asserter
+fhir:Condition.asserter rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:Practitioner,
+			   fhir:Patient.
+			   
+###fhir:Condition.dateAsserted
+fhir:Condition.dateAsserted rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:date.
+	
+###fhir:Condition.code
+fhir:Condition.code  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Condition ;
+	rdfs:range fhir:CodeableConcept .
+	
+###fhir:Condition.category
+fhir:Condition.category rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Condition.status
+fhir:Condition.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:code.
+	
+###fhir:Condition.certainty
+fhir:Condition.certainty rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Condition.severity
+fhir:Condition.severity rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Condition.onsetDate
+fhir:Condition.onsetDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:date.
+	
+###fhir:Condition.onsetAge
+fhir:Condition.onsetAge rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:Age.
+	
+###fhir:Condition.abatementDate
+fhir:Condition.abatementDate rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:date.
+	
+###fhir:Condition.abatementAge
+fhir:Condition.abatementAge rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:Age.
+	
+###fhir:Condition.abatementBoolean
+fhir:Condition.abatementBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:boolean.
+	
+###fhir:Condition.notes
+fhir:Condition.notes rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition ;
+    rdfs:range fhir:string.
+	
+###################Condition.RelatedItem
+fhir:Condition.RelatedItem rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Condition.RelatedItem.type ;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+###fhir:Condition.RelatedItem.type
+fhir:Condition.RelatedItem.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition.RelatedItem ;
+    rdfs:range fhir:code.
+	
+###fhir:Condition.RelatedItem.code
+fhir:Condition.RelatedItem.code rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.RelatedItem;
+    rdfs:range fhir:CodeableConcept.
+
+###fhir:Condition.RelatedItem.target
+fhir:Condition.RelatedItem.target rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.RelatedItem;
+    rdfs:range fhir:Condition,
+			   fhir:Procedure,
+			   fhir:MedicationAdministration,
+			   fhir:Immunization,
+			   fhir:MedicationStatement.
+			   
+##############Condition.Location
+fhir:Condition.Location  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+###fhir:Condition.Location.code
+fhir:Condition.Location.code rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.Location;
+    rdfs:range fhir:CodeableConcept.
+
+###fhir:Condition.Location.detail
+fhir:Condition.Location.detail rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Condition.Location ;
+    rdfs:range fhir:string.
+	
+##############Condition.Stage
+fhir:Condition.Stage  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###fhir:Condition.Stage.summary
+fhir:Condition.Stage.summary rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.Stage;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Condition.Stage.assessment
+fhir:Condition.Stage.assessment rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.Stage;
+    rdfs:range fhir:Resource.
+	
+##############Condition.Evidence
+fhir:Condition.Evidence  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###fhir:Condition.Evidence.code
+fhir:Condition.Evidence.code rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.Evidence;
+    rdfs:range fhir:CodeableConcept.
+	
+###fhir:Condition.Evidence.detail
+fhir:Condition.Evidence.detail rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Condition.Evidence;
+    rdfs:range fhir:Resource.
+	
+############################################Procedure
+fhir:Procedure rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Procedure.subject ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Procedure.type;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+	rdfs:subClassOf  fhir:Resource  .
+
+### fhir:Procedure.performer						   
+fhir:Procedure.performer rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:Procedure.Performer.
+
+### fhir:Procedure.relatedItem						   
+fhir:Procedure.relatedItem rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:Procedure.RelatedItem.
+
+### fhir:Procedure.identifier						   
+fhir:Procedure.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:Identifier.	
+	
+###Procedure.subject
+fhir:Procedure.subject  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Procedure ;
+	rdfs:range fhir:Patient .	
+	
+###Procedure.type
+fhir:Procedure.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Procedure ;
+	rdfs:range fhir:CodeableConcept .
+
+### fhir:Procedure.bodySite					   
+fhir:Procedure.bodySite rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:CodeableConcept.	
+	
+### fhir:Procedure.indication					   
+fhir:Procedure.indication rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:CodeableConcept.
+
+### fhir:Procedure.date					   
+fhir:Procedure.date rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:Period.
+	
+### fhir:Procedure.encounter					   
+fhir:Procedure.encounter rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:Encounter.
+	
+###Procedure.outcome
+fhir:Procedure.outcome rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:string.
+	
+### fhir:Procedure.report				   
+fhir:Procedure.report rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:DiagnosticReport.
+	
+### fhir:Procedure.complication					   
+fhir:Procedure.complication rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:CodeableConcept.
+	
+###Procedure.followUp
+fhir:Procedure.followUp rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:string.
+	
+###Procedure.notes
+fhir:Procedure.notes rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Procedure ;
+    rdfs:range fhir:string.
+	
+#################################Procedure.RelatedItem
+fhir:Procedure.RelatedItem  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+###Procedure.RelatedItem.type
+fhir:Procedure.RelatedItem.type rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Procedure.RelatedItem;
+    rdfs:range fhir:code.
+	
+### fhir:Procedure.RelatedItem.target					   
+fhir:Procedure.RelatedItem.target rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure.RelatedItem ;
+    rdfs:range fhir:AdverseReaction,
+			   fhir:AllergyIntolerance,
+			   fhir:CarePlan,
+			   fhir:Condition,
+			   fhir:DeviceObservationReport,
+			   fhir:DiagnosticReport,
+			   fhir:FamilyHistory,
+			   fhir:ImagingStudy,
+			   fhir:Immunization,
+			   fhir:ImmunizationRecommendation,
+			   fhir:MedicationAdministration,
+			   fhir:MedicationDispense,
+			   fhir:MedicationPrescription,
+			   fhir:MedicationStatement,
+			   fhir:Observation,
+			   fhir:Procedure.
+	
+#################################Procedure.Performer
+fhir:Procedure.Performer  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .
+	
+	
+### fhir:Procedure.Performer.person					   
+fhir:Procedure.Performer.person rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure.performer ;
+    rdfs:range fhir:Practitioner.
+	
+### fhir:Procedure.Performer.role					   
+fhir:Procedure.Performer.role rdf:type owl:FunctionalProperty, 
+	owl:ObjectProperty ;
+    rdfs:domain fhir:Procedure.Performer ;
+    rdfs:range fhir:CodeableConcept.
+	
+	
+	
+############################MedicationPrescription
+fhir:MedicationPrescription rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource  .
+
+	### fhir:MedicationPrescription.DosageInstruction							   
+fhir:MedicationPrescription.dosageInstruction rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:MedicationPrescription.DosageInstruction . 
+	
+### fhir:MedicationPrescription.Dispense							   
+fhir:MedicationPrescription.dispense rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:MedicationPrescription.Dispense . 
+		
+### fhir:MedicationPrescription.Substitution							   
+fhir:MedicationPrescription.substitution rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:MedicationPrescription.Substitution . 	
+
+### fhir:MedicationPrescription.identifier							   
+fhir:MedicationPrescription.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Identifier . 
+
+###fhir:MedicationPrescription.dateWritten
+fhir:MedicationPrescription.dateWritten rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:dateTime.	
+	
+###fhir:MedicationPrescription.status
+fhir:MedicationPrescription.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:code.	
+			
+### fhir:MedicationPrescription.patient							   
+fhir:MedicationPrescription.patient rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Patient . 
+	
+### fhir:MedicationPrescription.prescriber							   
+fhir:MedicationPrescription.prescriber rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Practitioner . 
+	
+### fhir:MedicationPrescription.encounter							   
+fhir:MedicationPrescription.encounter rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Encounter . 
+
+### fhir:MedicationPrescription.reasonCodeableConcept							   
+fhir:MedicationPrescription.reasonCodeableConcept rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Condition . 
+			   
+### fhir:MedicationPrescription.reasonCondition							   
+fhir:MedicationPrescription.reasonCondition rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:CodeableConcept.			   
+	
+### fhir:MedicationPrescription.medication							   
+fhir:MedicationPrescription.medication rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription ;
+    rdfs:range fhir:Medication . 
+
+################MedicationPrescription.DosageInstruction
+fhir:MedicationPrescription.DosageInstruction  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+
+###fhir:MedicationPrescription.DosageInstruction.text
+fhir:MedicationPrescription.DosageInstruction.text rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:string.	
+		 
+	
+### fhir:MedicationPrescription.DosageInstruction.additionalInstructions						   
+fhir:MedicationPrescription.DosageInstructiont.additionalInstructions rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:CodeableConcept . 
+
+	
+###fhir:MedicationPrescription.DosageInstruction.timingDateTime
+fhir:MedicationPrescription.DosageInstruction.timingDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:dateTime.
+
+fhir:MedicationPrescription.DosageInstructiont.timingPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:Period.
+
+fhir:MedicationPrescription.DosageInstructiont.timingSchedule rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range  fhir:Schedule.			   
+
+###fhir:MedicationPrescription.DosageInstruction.asNeededBoolean
+fhir:MedicationPrescription.DosageInstruction.asNeededBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:boolean.
+
+fhir:MedicationPrescription.DosageInstructiont.asNeededCodeableConcept rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:CodeableConcept.
+
+			   
+### fhir:MedicationPrescription.DosageInstruction.site						   
+fhir:MedicationPrescription.DosageInstructiont.site rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:CodeableConcept . 	
+	
+### fhir:MedicationPrescription.DosageInstruction.route						   
+fhir:MedicationPrescription.DosageInstructiont.route rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:CodeableConcept . 	
+	
+### fhir:MedicationPrescription.DosageInstruction.method						   
+fhir:MedicationPrescription.DosageInstructiont.method rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:CodeableConcept . 	
+	
+### fhir:MedicationPrescription.DosageInstruction.doseQuantity						   
+fhir:MedicationPrescription.DosageInstructiont.doseQuantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:Quantity . 	
+	
+### fhir:MedicationPrescription.DosageInstruction.rate						   
+fhir:MedicationPrescription.DosageInstructiont.rate rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:Ratio . 	
+	
+### fhir:MedicationPrescription.DosageInstruction.maxDosePerPeriod						   
+fhir:MedicationPrescription.DosageInstructiont.maxDosePerPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.DosageInstruction ;
+    rdfs:range fhir:Ratio . 	
+	
+###################MedicationPrescription.Dispense
+fhir:MedicationPrescription.Dispense rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+### fhir:MedicationPrescription.Dispense.medication					   
+fhir:MedicationPrescription.Dispense.medication rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dispense ;
+    rdfs:range fhir:Medication . 
+	
+### fhir:MedicationPrescription.Dispense.validityPeriod					   
+fhir:MedicationPrescription.Dispense.validityPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dispense ;
+    rdfs:range fhir:Period . 
+
+###fhir:MedicationPrescription.Dispense.expectedSupplyDuration
+fhir:MedicationPrescription.Dispense.expectedSupplyDuration rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.Dispense ;
+    rdfs:range fhir:integer.
+	
+### fhir:MedicationPrescription.Dispense.quantity				   
+fhir:MedicationPrescription.Dispense.quantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dispense ;
+    rdfs:range fhir:Quantity . 
+	
+### fhir:MedicationPrescription.Dispense.numberOfRepeatsAllowed					   
+fhir:MedicationPrescription.Dispense.numberOfRepeatsAllowed	 rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dispense ;
+    rdfs:range fhir:Duration . 
+	
+##################MedicationPrescription.Substitution
+fhir:MedicationPrescription.Substitution rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationPrescription.Substitution.type;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+### fhir:MedicationPrescription.Substitution.type
+	fhir:MedicationPrescription.Substitution.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationPrescription.Substitution ;
+	rdfs:range fhir:CodeableConcept .	
+
+### fhir:MedicationPrescription.Substitution.reason					   
+fhir:MedicationPrescription.Substitution.reason rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Substitution ;
+    rdfs:range fhir:CodeableConcept . 
+	
+####################MedicationAdministration
+fhir:MedicationAdministration rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationAdministration.status;
+							owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange fhir:code
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationAdministration.patient ;
+							owl:onClass fhir:Patient;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationAdministration.practitioner ;
+							owl:onClass fhir:Practitioner;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationAdministration.prescription ;
+							owl:onClass fhir:MedicationPrescription;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						],
+						[ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationAdministration.whenGiven ;
+							owl:onClass fhir:Period;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						] ;
+	rdfs:subClassOf  fhir:Resource  .
+	
+### fhir:MedicationAdministration.dosage							   
+fhir:MedicationAdministration.dosage rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:MedicationAdministration.Dosage . 
+	
+	
+### fhir:MedicationAdministration.identifier							   
+fhir:MedicationAdministration.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:Identifier .	
+	
+### fhir:MedicationAdministration.status	
+fhir:MedicationAdministration.status rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MedicationAdministration;
+	rdfs:range fhir:code.
+	
+### fhir:MedicationAdministration.patient
+fhir:MedicationAdministration.patient  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationAdministration;
+	rdfs:range fhir:Patient.
+	
+### fhir:MedicationAdministration.practitioner
+fhir:MedicationAdministration.practitioner rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationAdministration;
+	rdfs:range fhir:Practitioner .
+
+
+	
+### fhir:MedicationAdministration.encounter					   
+fhir:MedicationAdministration.encounter rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:Encounter . 
+	
+### fhir:MedicationAdministration.prescription
+fhir:MedicationAdministration.prescription rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationAdministration;
+	rdfs:range fhir:MedicationPrescription .
+
+	
+
+### fhir:MedicationAdministration.wasNotGiven	
+fhir:MedicationAdministration.wasNotGiven rdf:type owl:DatatypeProperty ,
+    owl:FunctionalProperty ;           
+    rdfs:domain fhir:MedicationAdministration;
+	rdfs:range fhir:boolean.
+	
+### fhir:MedicationAdministration.reasonNotGiven				   
+fhir:MedicationAdministration.reasonNotGiven rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:CodeableConcept . 	
+
+	
+### fhir:MedicationAdministration.whenGiven
+fhir:MedicationAdministration.whenGiven rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationAdministration;
+	rdfs:range fhir:Period .
+	
+### fhir:MedicationAdministration.medication				   
+fhir:MedicationAdministration.medication rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:Medication . 
+	
+### fhir:MedicationAdministration.device				   
+fhir:MedicationAdministration.device rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationAdministration ;
+    rdfs:range fhir:Device . 
+
+################################MedicationAdministration.Dosage
+fhir:MedicationAdministration.Dosage  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+###fhir:MedicationAdministration.Dosage.timingDateTime
+fhir:MedicationPrescription.Dosage.timingDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:dateTime.
+
+fhir:MedicationAdministration.Dosage.timingPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:Period.	
+	
+###fhir:MedicationAdministration.Dosage.asNeededBoolean
+fhir:MedicationPrescription.Dosage.asNeededBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:boolean.
+
+fhir:MedicationAdministration.Dosage.asNeededCodeableConcept rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:CodeableConcept.	
+	
+######MedicationAdministration.site
+fhir:MedicationAdministration.Dosage.site rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationAdministration.route
+fhir:MedicationAdministration.Dosage.route rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationAdministration.method
+fhir:MedicationAdministration.Dosage.method rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationAdministration.quantity
+fhir:MedicationAdministration.Dosage.quantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:Quantity.
+	
+######MedicationAdministration.rate
+fhir:MedicationAdministration.Dosage.rate rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+######MedicationAdministration.maxDosePerPeriod
+fhir:MedicationAdministration.Dosage.maxDosePerPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationPrescription.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+###############################MedicationStatement
+	fhir:MedicationStatement rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource  .
+	
+### fhir:MedicationStatement.Dosage							   
+fhir:MedicationStatement.dosage rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationStatement;
+    rdfs:range fhir:MedicationStatement.Dosage.
+	
+######MedicationStatement.identifier
+fhir:MedicationStatement.identifier rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:Identifier.
+	
+######MedicationStatement.patient
+fhir:MedicationStatement.patient rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:Patient.
+
+###fhir:MedicationStatement.wasNotGiven
+fhir:MedicationStatement.wasNotGiven rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationStatement;
+    rdfs:range fhir:boolean	.
+	
+######MedicationStatement.reasonNotGiven
+fhir:MedicationStatement.reasonNotGiven rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:CodeableConcept.
+
+######MedicationStatement.whenGiven
+fhir:MedicationStatement.whenGiven rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:Period.	
+					   
+######MedicationStatement.medication
+fhir:MedicationStatement.medication rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:Medication.	
+	
+######MedicationStatement.device
+fhir:MedicationStatement.device rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement ;
+    rdfs:range fhir:Device.	
+	
+############################MedicationStatement.Dosage
+fhir:MedicationStatement.Dosage  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+
+
+###fhir:MedicationStatement.Dosage.asNeededBoolean
+fhir:MedicationStatement.Dosage.asNeededBoolean rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range  fhir:Schedule . 
+			   
+###fhir:MedicationStatement.Dosage.asNeededCodeableConcept
+fhir:MedicationStatement.Dosage.asNeededCodeableConcept rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:boolean.
+
+fhir:MedicationStatement.Dosage.asNeeded rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept . 
+	
+######MedicationStatement.Dosage.site
+fhir:MedicationStatement.Dosage.site rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationStatement.Dosage.route
+fhir:MedicationStatement.Dosage.route rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationStatement.Dosage.method
+fhir:MedicationStatement.Dosage.method rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationStatement.Dosage.quantity
+fhir:MedicationStatement.Dosage.quantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:Quantity.
+	
+######MedicationStatement.Dosage.rate
+fhir:MedicationStatement.Dosage.rate rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+######MedicationStatement.Dosage.maxDosePerPeriod
+fhir:MedicationStatement.Dosage.maxDosePerPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationStatement.Dosage.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+
+################################MedicationDispense
+fhir:MedicationDispense rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource  .
+	
+### fhir:MedicationDispense.dispense							   
+fhir:MedicationDispense.dispense rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:MedicationDispense.Dispense.
+	
+### fhir:MedicationDispense.substitution							   
+fhir:MedicationDispense.substitution rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:MedicationDispense.Substitution.
+	
+######MedicationDispense.identifier
+fhir:MedicationDispense.identifier rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:Identifier.
+	
+###fhir:MedicationDispense.status
+fhir:MedicationDispense.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:code.
+
+	
+######MedicationDispense.patient
+fhir:MedicationDispense.patient rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense;
+    rdfs:range fhir:Patient.
+	
+######MedicationDispense.dispenser
+fhir:MedicationDispense.dispenser rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:Practitioner.
+	
+######MedicationDispense.authorizingPrescription
+fhir:MedicationDispense.authorizingPrescription rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:MedicationPrescription.
+	
+	
+##############################MedicationDispense.Dispense
+
+fhir:MedicationDispense.Dispense  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+	
+### fhir:MedicationDispense.Dispense.Dosage							   
+fhir:MedicationDispense.Dispense.dosage rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:MedicationDispense.Dispense.Dosage.
+	
+######MedicationDispense.Dispense.identifier
+fhir:MedicationDispense.Dispense.identifier rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:Identifier.
+	
+###fhir:MedicationDispense.status
+fhir:MedicationDispense.Dispense.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:code.	
+	
+######MedicationDispense.Dispense.type
+fhir:MedicationDispense.Dispense.type rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationDispense.Dispense.quantity
+fhir:MedicationDispense.Dispense.quantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:Quantity.
+	
+######MedicationDispense.Dispense.medication
+fhir:MedicationDispense.medication.type rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:Medication.
+
+###fhir:MedicationDispense.Dispense.whenPrepared
+fhir:MedicationDispense.Dispense.whenPrepared rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:dateTime.
+	
+###fhir:MedicationDispense.Dispense.whenHandedOver
+fhir:MedicationDispense.Dispense.whenHandedOver rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense ;
+    rdfs:range fhir:dateTime.
+	
+######MedicationDispense.Dispense.destination
+fhir:MedicationDispense.Dispense.destination rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:Location.
+	
+######MedicationDispense.Dispense.receiver
+fhir:MedicationDispense.Dispense.receiver rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense ;
+    rdfs:range fhir:Patient,
+			   fhir:Practitioner.
+	
+#########################MedicationDispense.Dispense.Dosage
+fhir:MedicationDispense.Dispense.Dosage  rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+######MedicationDispense.Dispense.Dosage.additionalInstructions
+fhir:MedicationDispense.Dispense.Dosage.additionalInstructions rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+
+###fhir:MedicationDispense.Dispense.Dosage.timingDateTime
+fhir:MedicationPrescription.Dispense.Dosage.timingDateTime rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:dateTime.
+
+fhir:MedicationDispense.Dispense.Dosage.timingPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:Period . 
+
+fhir:MedicationDispense.Dispense.Dosage.timingSchedule rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:Schedule . 
+			   
+###fhir:MedicationDispense.Dispense.Dosage.asNeededBoolean
+fhir:MedicationDispense.Dispense.Dosage.asNeededBoolean rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:boolean.
+
+fhir:MedicationDispense.Dispense.Dosage.asNeededCodeableConcept rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept . 
+	
+######MedicationDispense.Dispense.Dosage.site
+fhir:MedicationDispense.Dispense.Dosage.site rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationDispense.Dispense.Dosage.route
+fhir:MedicationDispense.Dispense.Dosage.route rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationDispense.Dispense.Dosage.method
+fhir:MedicationDispense.Dispense.Dosage.method rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationDispense.Dispense.Dosage.quantity
+fhir:MedicationDispense.Dispense.Dosage.quantity rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:Quantity.
+	
+######MedicationDispense.Dispense.Dosage.rate
+fhir:MedicationDispense.Dispense.Dosage.rate rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+######MedicationDispense.Dispense.Dosage.maxDosePerPeriod
+fhir:MedicationDispense.Dispense.Dosage.maxDosePerPeriod rdf:type  owl:FunctionalProperty,
+	owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Dispense.Dosage ;
+    rdfs:range fhir:Ratio.
+	
+##################MedicationDispense.Substitution
+fhir:MedicationDispense.Substitution  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:MedicationDispense.Substitution ;
+							owl:onClass fhir:CodeableConcept;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+    rdfs:subClassOf  fhir:DependentResource  .	
+
+#####fhir:MedicationDispense.Substitution.type
+	fhir:MedicationDispense.Substitution.type  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:MedicationDispense.Substitution ;
+	rdfs:range fhir:CodeableConcept .
+
+######MedicationDispense.Substitution.reason
+fhir:MedicationDispense.Substitution.reason rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Substitution ;
+    rdfs:range fhir:CodeableConcept.
+	
+######MedicationDispense.Substitution.responsibleParty
+fhir:MedicationDispense.Substitution.responsibleParty rdf:type owl:ObjectProperty ;
+    rdfs:domain fhir:MedicationDispense.Substitution ;
+    rdfs:range fhir:CodeableConcept.

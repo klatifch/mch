@@ -1,0 +1,276 @@
+@prefix : <http://hl7.org/fhir#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fhir: <http://hl7.org/fhir#>.
+@base <http://hl7.org/fhir> .
+
+
+######OrderResponse
+fhir:OrderResponse  rdf:type owl:Class ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:OrderResponse.code;
+							owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+							owl:onDataRange xsd:integer
+						],
+						[ 
+								rdf:type owl:Restriction ;
+								owl:onProperty fhir:OrderResponse.request ;
+								owl:onClass fhir:Order;
+								owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+						];
+	rdfs:subClassOf  fhir:Resource  .
+	
+#### fhir:OrderResponse.identifier				
+fhir:OrderResponse.identifier  rdf:type owl:ObjectProperty ;
+    rdfs:range fhir:Identifier ;
+    rdfs:domain  fhir:OrderResponse .
+	
+	
+#######fhir:OrderResponse.request
+fhir:OrderResponse.request  rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:OrderResponse ;
+	rdfs:range fhir:Order .
+	
+#####fhir:OrderResponse.date
+	fhir:OrderResponse.date  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:OrderResponse ;
+    rdfs:range fhir:dateTime.
+	
+#### fhir:OrderResponse.who				
+fhir:OrderResponse.who rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:OrderResponse; 
+    rdfs:range fhir:Practitioner,
+			   fhir:Organization,
+			   fhir:Device. 
+			   
+#### fhir:OrderResponse.authorityCodeableConcept			
+fhir:OrderResponse.authority rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:OrderResponse; 
+    rdfs:range fhir:CodeableConcept.
+
+#### fhir:OrderResponse.authorityResource			
+fhir:OrderResponse.authority rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:OrderResponse; 
+    rdfs:range fhir:Resource.	
+			   
+#####fhir:OrderResponse.code
+	fhir:OrderResponse.code  rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:OrderResponse ;
+    rdfs:range fhir:code.
+	
+#####fhir:OrderResponse.description
+	fhir:OrderResponse.description rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:OrderResponse ;
+    rdfs:range fhir:string.
+	
+#### fhir:OrderResponse.fulfillment			
+fhir:OrderResponse.fulfillment rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:OrderResponse; 
+    rdfs:range  fhir:Resource.
+
+
+####################Order
+fhir:Order  rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource ;
+	owl:equivalentClass [ 
+							rdf:type owl:Restriction ;
+							owl:onProperty fhir:Order.detail ;
+							owl:onClass fhir:Resource;
+							owl:minCardinality "1"^^xsd:nonNegativeInteger
+						] .
+
+### fhir:Order.when							   
+fhir:Order.when rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+	rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Order ;
+    rdfs:range fhir:Order.When .
+	
+#### fhir:Order.identifier			
+fhir:OrderResponse.identifier rdf:type owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Identifier.
+	
+#####fhir:Order.date
+	fhir:Order.date rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Order ;
+    rdfs:range fhir:dateTime.
+	
+#### fhir:Order.subject			
+fhir:Order.subject rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Patient.
+	
+#### fhir:Order.source		
+fhir:Order.source rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Practitioner.
+	
+#### fhir:Order.source		
+fhir:Order.source rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Organization,
+			   fhir:Device,
+			   fhir:Practitioner.
+			   
+#### fhir:Order.reasonResource		
+fhir:Order.reasonResource rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Resource.
+			   
+#### fhir:Order.reasonCodeableConcept		
+fhir:Order.reasonCodeableConcept rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:CodeableConcept .
+			   
+#### fhir:Order.authority		
+fhir:Order.authority rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order; 
+    rdfs:range fhir:Resource.
+	
+
+####fhir:Order.detail
+fhir:Order.detail rdf:type owl:ObjectProperty ;           
+            rdfs:domain fhir:Resource .
+
+##############Order.When	
+fhir:Order.When rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .	
+	
+#### fhir:Order.When.code		
+fhir:Order.When.code rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order.When; 
+    rdfs:range fhir:CodeableConcept.
+	
+#### fhir:Order.When.schedule	
+fhir:Order.When.schedule rdf:type owl:FunctionalProperty,
+	owl:ObjectProperty ;
+	rdfs:domain  fhir:Order.When; 
+    rdfs:range fhir:Schedule.
+
+##############Supply		
+
+fhir:Supply rdf:type owl:Class ;
+	rdfs:subClassOf  fhir:Resource  .	
+	
+### fhir:Supply.dispense						   
+fhir:Supply.dispense rdf:type owl:ObjectProperty ;
+rdfs:subPropertyOf fhir:composition ;
+    rdfs:domain fhir:Supply ;
+    rdfs:range fhir:Supply.Dispense.
+
+#### fhir:Supply.kind				
+fhir:Supply.kind rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply ;
+    rdfs:range fhir:CodeableConcept .	
+	
+#### fhir:Supply.identifier				
+fhir:Supply.identifier rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply ;
+    rdfs:range fhir:Identifier .
+
+#####fhir:Supply.status
+	fhir:Supply.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Supply ;
+    rdfs:range fhir:code.			
+	
+#### fhir:Supply.orderedItem				
+fhir:Supply.orderedItem rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply ;
+    rdfs:range fhir:Medication,
+			   fhir:Substance,
+			   fhir:Device . 
+
+#### fhir:Supply.patient				
+fhir:Supply.patient rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply ;
+    rdfs:range fhir:Patient .		
+
+############
+fhir:Supply.Dispense rdf:type owl:Class ;
+    rdfs:subClassOf  fhir:DependentResource  .		
+
+#### fhir:Supply.Dispense.identifier				
+fhir:Supply.Dispense.identifier rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Identifier .
+
+#####fhir:Supply.Dispense.status
+	fhir:Supply.Dispense.status rdf:type owl:DatatypeProperty,
+	owl:FunctionalProperty;
+    rdfs:domain fhir:Supply.Dispense ;
+    rdfs:range fhir:code.	
+	
+#### fhir:Supply.Dispense.type				
+fhir:Supply.Dispense.type rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:CodeableConcept .
+	
+#### fhir:Supply.Dispense.quantity				
+fhir:Supply.Dispense.identifier rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Quantity .
+	
+#### fhir:Supply.Dispense.suppliedItem				
+fhir:Supply.Dispense.suppliedItem rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Medication,
+			   fhir:Substance,
+			   fhir:Device . 
+	
+#### fhir:Supply.Dispense.supplier				
+fhir:Supply.Dispense.supplier rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Practitioner .
+	
+#### fhir:Supply.Dispense.whenPrepared				
+fhir:Supply.Dispense.whenPrepared rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Period .
+	
+#### fhir:Supply.Dispense.whenHandedOver				
+fhir:Supply.Dispense.whenHandedOver rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Period .
+	
+#### fhir:Supply.Dispense.destination				
+fhir:Supply.Dispense.destination rdf:type owl:FunctionalProperty,
+owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Location .
+	
+#### fhir:Supply.Dispense.receiver				
+fhir:Supply.Dispense.receiver rdf:type owl:ObjectProperty ;
+    rdfs:domain  fhir:Supply.Dispense ;
+    rdfs:range fhir:Practitioner .
+	
